@@ -11,7 +11,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm', validators=[DataRequired(), EqualTo('password')])
 
-    submit = SubmitField('Dodaj')
+    submit = SubmitField('Register')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

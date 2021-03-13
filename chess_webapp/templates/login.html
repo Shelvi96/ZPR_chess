@@ -1,20 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="">
+    <div class="login_wrapper">
         <form method="POST" action="" autocomplete="off">
             {{ form.hidden_tag() }}
-            <div class="login_wrapper">
-                <p class="loginTitle">Log In</p>
-                <div class="login">
-                    {{ form.username.label(class="form_control_label") }}
-                    {{ form.username(class="form_control_box") }}
+            <div class="form_wrapper">
+                <p class="form_title">Log In</p>
+                <div class="form_field">
+                    {{ form.username.label(class="float_left") }}
+                    {{ form.username(class="float_right") }}
                 </div>
-                <div class="password">
-                    {{ form.password.label(class="form_control_label") }}
-                    {{ form.password(class="form_control_box") }}
+                <div class="form_field">
+                    {{ form.password.label(class="float_left") }}
+                    {{ form.password(class="float_right") }}
                 </div>
-                <div class="submit">
-                    {{ form.submit(class="btn") }}
+                <div class="form_field">
+                    {{ form.submit(class="global_button") }}
                 </div>
             </div>
         </form>

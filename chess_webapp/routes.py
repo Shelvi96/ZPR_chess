@@ -43,3 +43,15 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route("/no_access")
+def no_access():
+    return render_template('no_access.html', title='No access')
+
+
+@app.route("/app")
+def app():
+    if not current_user.is_authenticated:
+        return redirect(url_for('no_access'))
+    return render_template('app.html', title='App')

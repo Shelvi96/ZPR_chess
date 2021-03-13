@@ -1,0 +1,94 @@
+.fontConsole {
+    font-family: 'Courier New', serif;
+}
+.font14 {
+    font-size: 14px;
+}
+.font12 {
+    font-size: 12px;
+}
+
+.global_button {
+    margin:0;
+    padding:0;
+    color: #CDCDCD;
+    height: 25px;
+    width: 80px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.global_button:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.global_button:active {
+    background: #950740;
+}
+
+.default_wrapper {
+    height: 150px;
+    width: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #950740;
+}
+.default_wrapper button {
+    margin:0;
+    padding:0;
+    color: #CDCDCD;
+    height: 50px;
+    width: 100px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.default_wrapper button:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.default_wrapper button:active {
+    background: #950740;
+}
+
+
+.form_wrapper {
+    width: 500px;
+    max-height: 100%;
+    margin: 0;
+    display: flex;
+    padding: 20px 0;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #950740;
+    font-size: 18px;
+    font-weight: bold;
+    box-sizing:border-box;
+}
+.form_title {
+    margin: 0;
+    padding: 0;
+}
+.form_field{
+    width: 270px;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.float_left {
+    float: left;
+}
+.float_right {
+    float: right;
+}

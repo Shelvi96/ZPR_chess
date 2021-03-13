@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="welcome_wrapper">
+    <div class="default_wrapper">
         <p>Siema, witamy Cię {{ current_user.username if current_user.username else "tajemniczy gosciu" }}</p>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('app') }}"><button class="global_button">Play Chess!</button></a>
+        {% endif %}
     </div>
 {% endblock content %}

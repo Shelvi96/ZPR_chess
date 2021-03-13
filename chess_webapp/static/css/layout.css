@@ -1,0 +1,108 @@
+@font-face {
+    font-family: WUT;
+    src: url("../fonts/radikalwut-bold.otf") format("opentype");
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #4e4e50;
+    color: #950740;
+}
+
+.wrapper {
+    padding: 0;
+    margin: 5vh 5vw;
+    height: 90vh;
+    width: 90vw;
+    background: #1a1a1d;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0 10px;
+    border-bottom: 5px solid #4e4e50;
+}
+.header_info {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.titles {
+    user-select: none;
+    cursor: pointer;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    flex: 1;
+}
+.bigTitle {
+    flex: 1;
+    font-family: WUT, serif;
+    font-size: 40px;
+}
+.smallTitle {
+    flex: 1;
+    font-size: 20px;
+}
+.info {
+    float: right;
+    margin: 0;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header_content {
+    height: 30px;
+}
+.header_content_buttons {
+    float: right;
+    font-size: 0;
+}
+.header_button {
+    margin: 0 5px;
+    padding:0;
+    color: #CDCDCD;
+    height: 30px;
+    width: 50px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.big_button {
+    height: 50px;
+    width: 100px;
+}
+.header_button:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.header_button:active {
+    background: #950740;
+}
+
+main {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+footer {
+    border-top: 5px solid #4e4e50;
+    height: 50px;
+    padding: 10px;
+}
+footer p {
+    float: right;
+}
