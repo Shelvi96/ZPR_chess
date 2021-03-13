@@ -1,23 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% if not current_user.is_authenticated %}
-        <div class="welcome_wrapper">
-            <p>Siema, witamy Cię {{ current_user.username if current_user.username else "tajemniczy gosciu" }}</p>
-        </div>
-    {% elif current_user.is_authenticated and current_user.role == 'admin' %}
-        <div class="control_panel">
-            <button class="header_button big_button" onclick="window.location.href='/register';">Dodaj pracownika</button>
-        </div>
-    {% elif current_user.is_authenticated and current_user.role == 'komisja' %}
-        <div class="control_panel">
-            <button class="header_button big_button" onclick="window.location.href='/verify_proposals';">Ocen wniosek</button>
-            <button class="header_button big_button" onclick="window.location.href='/my_proposals';">Sprawdz swoje wnioski</button>
-            <button class="header_button big_button" onclick="window.location.href='/new_proposal';">Zloz wniosek</button>
-        </div>
-    {% else %}
-        <div class="control_panel">
-            <button class="header_button big_button" onclick="window.location.href='/my_proposals';">Sprawdz swoje wnioski</button>
-            <button class="header_button big_button" onclick="window.location.href='/new_proposal';">Zloz wniosek</button>
-        </div>
-    {% endif %}
+    <div class="welcome_wrapper">
+        <p>Siema, witamy Cię {{ current_user.username if current_user.username else "tajemniczy gosciu" }}</p>
+    </div>
 {% endblock content %}

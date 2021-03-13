@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>BD2-Projekt</title>
+  <title>Chess_ZPR</title>
 
   <link rel="stylesheet" href="../static/css/styles.css">
 </head>
@@ -12,17 +12,14 @@
         <header>
             <div class="header_info">
                 <div class="titles" onclick="window.location.href='/';">
-                    <div class="bigTitle">BAZY DANYCH 2</div>
+                    <div class="bigTitle">ZAAWANSOWANE PROGRAMOWANIE W C++</div>
                     <div class="smallTitle fontConsole">Projekt zaliczeniowy</div>
                 </div>
                 <div class="info fontConsole font14">
                     <p>
                     Skład zespołu: <br><br>
-                    Cezary Demianiuk <br>
                     Jakub Jurasz <br>
-                    Jan Wasilewski <br>
                     Konrad Owsikowski <br>
-                    Sebastian Smoliński <br>
                     </p>
                 </div>
             </div>
@@ -32,6 +29,7 @@
                     {% if current_user.is_authenticated %}
                         <button class="header_button" onclick="window.location.href='/logout';">Logout</button>
                     {% else %}
+                        <button class="header_button"  onclick="window.location.href='/register';">Register</button>
                         <button class="header_button"  onclick="window.location.href='/login';">Login</button>
                     {% endif %}
                 </div>
@@ -42,7 +40,7 @@
             {% block content %}{% endblock %}
         </main>
         <footer class="fontConsole font12">
-            <p>Copyright 2020 Blah Blah Blah</p>
+            <p>Copyright 2021 Blah Blah Blah</p>
         </footer>
     </div>
 </body>
