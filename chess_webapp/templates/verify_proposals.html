@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="proposal_table_wrapper">
+    <table class="proposals_table">
+        <th>
+            <td>Typ wniosku</td>
+            <td>Data zlozenia</td>
+            <td>Status</td>
+        </th>
+        {% for elem in data %}
+            <tr>
+                {% if elem['decyzja'] == 'oczekujacy' %}
+                    <td><button class="btn" onclick="window.location.href='/verify_proposal/{{ elem['id_wniosku'] }}';">Ocen</button></td>
+                {% else %}
+                    <td><button class="btn" onclick="window.location.href='/proposal_details/{{ elem['id_wniosku'] }}';">Podgląd</button></td>
+                {% endif %}
+                <td>{{ elem['rodzaj_uslugi']  }}</td>
+                <td>{{ elem['data_zlozenia'].date()  }}</td>
+                <td>{{ elem['decyzja']  }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% endblock content %}

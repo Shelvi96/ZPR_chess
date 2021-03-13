@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block header %}
+    <button class="header_button" onclick="window.location.href='/new_proposal';">Powrót</button>
+{% endblock header %}
+{% block content %}
+<div class="welcome_wrapper">
+    <p>
+        Czesc {{ current_user.username }}! <br>
+        Poprawnie przesłano Twój wniosek.
+    </p>
+</div>
+{% endblock content %}

@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>BD2-Projekt</title>
+
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header_info">
+                <div class="titles" onclick="window.location.href='/';">
+                    <div class="bigTitle">BAZY DANYCH 2</div>
+                    <div class="smallTitle fontConsole">Projekt zaliczeniowy</div>
+                </div>
+                <div class="info fontConsole font14">
+                    <p>
+                    Skład zespołu: <br><br>
+                    Cezary Demianiuk <br>
+                    Jakub Jurasz <br>
+                    Jan Wasilewski <br>
+                    Konrad Owsikowski <br>
+                    Sebastian Smoliński <br>
+                    </p>
+                </div>
+            </div>
+            <div class="header_content">
+                <div class="header_content_buttons">
+                    <button class="header_button" onclick="window.location.href='/home';">Home</button>
+                    {% if current_user.is_authenticated %}
+                        <button class="header_button" onclick="window.location.href='/logout';">Logout</button>
+                    {% else %}
+                        <button class="header_button"  onclick="window.location.href='/login';">Login</button>
+                    {% endif %}
+                </div>
+                {% block header %}{% endblock %}
+            </div>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="fontConsole font12">
+            <p>Copyright 2020 Blah Blah Blah</p>
+        </footer>
+    </div>
+</body>
+</html>

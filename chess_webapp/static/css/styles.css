@@ -1,0 +1,278 @@
+@font-face {
+    font-family: WUT;
+    src: url("../fonts/radikalwut-bold.otf") format("opentype");
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #4e4e50;
+    color: #950740;
+}
+
+.wrapper {
+    padding: 0;
+    margin: 5vh 5vw;
+    height: 90vh;
+    width: 90vw;
+    background: #1a1a1d;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0 10px;
+    border-bottom: 5px solid #4e4e50;
+}
+.header_info {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.titles {
+    user-select: none;
+    cursor: pointer;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    flex: 1;
+}
+.bigTitle {
+    flex: 1;
+    font-family: WUT, serif;
+    font-size: 40px;
+}
+.smallTitle {
+    flex: 1;
+    font-size: 20px;
+}
+.info {
+    float: right;
+    margin: 0;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.error {
+    padding: 5px;
+    height: 20px;
+}
+.fontConsole {
+    font-family: 'Courier New', serif;
+}
+.font14 {
+    font-size: 14px;
+}
+.font12 {
+    font-size: 12px;
+}
+
+main {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+footer {
+    border-top: 5px solid #4e4e50;
+    height: 50px;
+    padding: 10px;
+}
+footer p {
+    float: right;
+}
+
+.welcome_wrapper {
+    height: 150px;
+    width: 300px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #950740;
+}
+.welcome_wrapper button {
+    margin:0;
+    padding:0;
+    color: #CDCDCD;
+    height: 50px;
+    width: 100px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.welcome_wrapper button:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.welcome_wrapper button:active {
+    background: #950740;
+}
+
+.control_panel {
+    display: flex;
+    flex-direction: row;
+}
+.header_content {
+    height: 30px;
+}
+.header_content_buttons {
+    float: right;
+    font-size: 0;
+}
+.header_button {
+    margin: 0 5px;
+    padding:0;
+    color: #CDCDCD;
+    height: 30px;
+    width: 50px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.big_button {
+    height: 50px;
+    width: 100px;
+}
+.header_button:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.header_button:active {
+    background: #950740;
+}
+
+.login_wrapper {
+    width: 500px;
+    max-height: 100%;
+    margin: 0;
+    display: flex;
+    padding: 20px 0;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #950740;
+    font-size: 18px;
+    font-weight: bold;
+    box-sizing:border-box;
+}
+.loginTitle {
+    margin: 0;
+    padding: 0;
+}
+.login, .password {
+    width: 270px;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+}
+.register_form {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.register_form form {
+    height: 100%;
+    margin: 0;
+    padding: 20px 0;
+    box-sizing:border-box;
+}
+.form_control_label {
+    float: left;
+}
+.form_control_box {
+    float: right;
+}
+.submit {
+    margin-top: 10px;
+}
+.btn {
+    margin:0;
+    padding:0;
+    color: #CDCDCD;
+    height: 25px;
+    width: 80px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover {
+    background: #6f2232;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.btn:active {
+    background: #950740;
+}
+
+.proposal_table_wrapper {
+    box-sizing:border-box;
+    overflow-y: auto;
+    max-height: 100%;
+    margin: 0;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+}
+.proposals_table {
+    box-sizing:border-box;
+    overflow-y: auto;
+    max-height: 100%;
+    border: 1px solid #950740;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: white;
+}
+.proposals_table tr {
+    border: 1px solid #950740;
+}
+.proposals_table td {
+    padding: 20px 10px;
+}
+
+.return_button {
+    margin: 0 5px;
+    padding:0;
+    color: #CDCDCD;
+    height: 30px;
+    width: 60px;
+    background: #4e4e50;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+decision_buttons {
+    display: flex;
+    flex-direction: row;
+}
+.decision_button {
+    margin: 0 5px;
+    padding:0;
+    height: 30px;
+    width: 50px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.accept_button {
+    color: #CDCDCD;
+    background: #0fb651;
+}
+.reject_button {
+    color: #CDCDCD;
+    background: #bd1e4b;
+}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block header %}
+    <button class="header_button" onclick="window.location.href='/new_proposal';">Powrót</button>
+{% endblock header %}
+{% block content %}
+
+<div class="">
+    <form method="POST" action="" autocomplete="off" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="login_wrapper">
+            <p class="loginTitle">Nowy wniosek o refundację wakacji</p>
+            <div class="login">
+                {{ form.comments1.label(class="form_control_label") }}
+                {{ form.comments1(class="form_control_box") }}
+                {% if form.comments1.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.comments1.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="login">
+                {{ form.expected_refund.label(class="form_control_label") }}
+                {{ form.expected_refund(class="form_control_box") }}
+                {% if form.expected_refund.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.expected_refund.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="submit">
+                {{ form.submit(class="btn") }}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

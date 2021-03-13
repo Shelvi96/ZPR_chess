@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+{% block header %}
+    <button class="header_button" onclick="window.location.href='/home';">Powrót</button>
+{% endblock header %}
+{% block content %}
+    <div class="register_form">
+        <form method="POST" action="" autocomplete="off" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="login_wrapper">
+                <p class="loginTitle">Dodaj pracownika</p>
+                <div class="login">
+                    {{ form.first_name.label(class="form_control_label") }}
+                    {{ form.first_name(class="form_control_box") }}
+                    {%  if form.first_name.errors %}
+                        <div class="error font12">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.last_name.label(class="form_control_label") }}
+                    {{ form.last_name(class="form_control_box") }}
+                    {%  if form.last_name.errors %}
+                        <div class="error font12">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.pesel.label(class="form_control_label") }}
+                    {{ form.pesel(class="form_control_box") }}
+                    {%  if form.pesel.errors %}
+                        <div class="error font12">
+                            {% for error in form.pesel.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.username.label(class="form_control_label") }}
+                    {{ form.username(class="form_control_box") }}
+                    {%  if form.username.errors %}
+                        <div class="error font12">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.email.label(class="form_control_label") }}
+                    {{ form.email(class="form_control_box") }}
+                    {%  if form.email.errors %}
+                        <div class="error font12">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.position.label(class="form_control_label") }}
+                    {{ form.position(class="form_control_box") }}
+                    {%  if form.position.errors %}
+                        <div class="error font12">
+                            {% for error in form.position.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.work_start_date.label(class="form_control_label") }}
+                    {{ form.work_start_date(class="form_control_box") }}
+                    {%  if form.work_start_date.errors %}
+                        <div class="error font12">
+                            {% for error in form.work_start_date.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.salary.label(class="form_control_label") }}
+                    {{ form.salary(class="form_control_box") }}
+                    {%  if form.salary.errors %}
+                        <div class="error font12">
+                            {% for error in form.salary.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="password">
+                    {{ form.password.label(class="form_control_label") }}
+                    {{ form.password(class="form_control_box") }}
+                    {%  if form.password.errors %}
+                        <div class="error font12">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="password">
+                    {{ form.confirm_password.label(class="form_control_label") }}
+                    {{ form.confirm_password(class="form_control_box") }}
+                    {%  if form.confirm_password.errors %}
+                        <div class="error font12">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="login">
+                    {{ form.role.label(class="form_control_label") }}
+                    <select name="role" class="form_control_box">
+                        {% for role in roles_list %}
+                            <option value="{{ role }}">{{ role }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="submit">
+                    {{ form.submit(class="btn") }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
