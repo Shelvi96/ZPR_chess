@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block head %}
     <link rel="stylesheet" href="../static/css/app.css">
+    <script type=text/javascript src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}
 {% block content %}
     <div class="default_wrapper">
@@ -17,3 +18,4 @@
         </div>
     </div>
 {% endblock content %}
+
