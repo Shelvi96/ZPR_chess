@@ -8,7 +8,7 @@
 }
 
 .box {
-    padding: 20px;
+    padding: 5px;
     font-size: 150%;
     text-align: center;
 }
@@ -19,4 +19,7 @@
 .light {
     background-color: #b5915f;
     color: #000;
+}
+.active {
+    border: 1px solid red;
 }

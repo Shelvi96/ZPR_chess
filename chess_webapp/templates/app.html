@@ -1,18 +1,14 @@
 {% extends "layout.html" %}
 {% block head %}
     <link rel="stylesheet" href="../static/css/app.css">
-    <script type=text/javascript src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script type=module src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}
 {% block content %}
     <div class="default_wrapper">
         <div class="chess_board">
             {% for i in range(0,8) %}
                 {% for j in range(0,8) %}
-                    {%  if (i+j)%2 == 0 %}
-                        <div class="box light"></div>
-                    {% else %}
-                        <div class="box dark"></div>
-                    {% endif %}
+                    <div id=box_{{ i }}_{{ j }} class="box"></div>
                 {% endfor %}
             {% endfor %}
         </div>
