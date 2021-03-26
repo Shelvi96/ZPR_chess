@@ -2,7 +2,7 @@ from chess_webapp import app
 
 from ctypes import * 
 
-libchesslib = CDLL("chess_webapp/chess_engine/libchesslib.so") 
+libchesslib = CDLL("chess_engine/libchesslib.so") 
 
 
 libchesslib._Z11printDupskov() 

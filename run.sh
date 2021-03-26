@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Chess webapp"
-cd chess_webapp/chess_engine
+cd chess_engine
 cmake CMakeLists.txt
 make
-cd ../..
+cd ..
 python3 run.py

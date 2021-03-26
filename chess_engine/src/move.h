@@ -10,7 +10,7 @@
 void printDupsko();
 
 
-bool isValid(std::string previousBoard, std::string currentBoard);
+// bool isValid(std::string previousBoard, std::string currentBoard);
 
 
 #endif // MOVE_H

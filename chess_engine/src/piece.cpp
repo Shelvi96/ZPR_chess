@@ -15,13 +15,13 @@ Piece::Piece() {
 }
 
 
-Piece::Piece(Color color, PieceType pieceType) {
-    pieceType = pieceType;
-    color = color;
+Piece::Piece(Color setColor, PieceType setPieceType) {
+    color = setColor;
+    pieceType = setPieceType;
 }
 
 
-Piece::~Piece() {}
+Piece::~Piece() = default;
 
 
 Color Piece::getColor() {
@@ -31,6 +31,22 @@ Color Piece::getColor() {
 
 PieceType Piece::getPieceType() {
     return pieceType;
+}
+
+
+void Piece::setPiece(Color newColor, PieceType newPieceType) {
+    color = newColor;
+    pieceType = newPieceType;
+}
+
+
+void Piece::setPieceType(PieceType newPieceType) {
+    pieceType = newPieceType;
+}
+
+
+void Piece::setColor(Color newColor) {
+    color = newColor;
 }
 
 
@@ -51,4 +67,3 @@ std::ostream& operator << (std::ostream& os, const PieceType& p) {
 void Piece::printPiece() {
     cout << "(" << color << "," << pieceType << ")";
 }
-

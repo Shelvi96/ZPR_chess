@@ -1,0 +1,56 @@
+    width = 8;
+    height = 8;
+
+    // // split FEN 
+    // std::istringstream iss(fen);
+    // std::vector<std::string> fenSplit(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
+    
+    // printVector(fenSplit);
+
+    // for (char const &c: fenSplit[0]) {
+    //     switch (c) {
+    //         case 'k':
+    //             board.push_back(Piece(Color::black, PieceType::king)); break;
+    //         case 'q':
+    //             board.push_back(Piece(Color::black, PieceType::queen)); break;
+    //         case 'r':
+    //             board.push_back(Piece(Color::black, PieceType::rook)); break;
+    //         case 'b':
+    //             board.push_back(Piece(Color::black, PieceType::bishop)); break;
+    //         case 'n':
+    //             board.push_back(Piece(Color::black, PieceType::knight)); break;
+    //         case 'p':
+    //             board.push_back(Piece(Color::black, PieceType::pawn)); break;
+    //         case 'K':
+    //             board.push_back(Piece(Color::white, PieceType::king)); break;
+    //         case 'Q':
+    //             board.push_back(Piece(Color::white, PieceType::queen)); break;
+    //         case 'R':
+    //             board.push_back(Piece(Color::white, PieceType::rook)); break;
+    //         case 'B':
+    //             board.push_back(Piece(Color::white, PieceType::bishop)); break;
+    //         case 'N':
+    //             board.push_back(Piece(Color::white, PieceType::knight)); break;
+    //         case 'P':
+    //             board.push_back(Piece(Color::white, PieceType::pawn)); break;
+    //         case '/':
+    //             break;
+    //         default:
+    //             if(isdigit(c)) {
+    //                 for(int i = 0; i < (int)c - '0'; ++i) {
+    //                     Piece empty(Color::white, PieceType::pawn);
+    //                     board.push_back(empty);
+    //                 }
+    //             } else {
+    //                 std::cout << "Invalid FEN";
+    //             }
+    //     }
+    // }
+    
+    for(int i = 0; i < width; ++i) {
+        for(int j = 0; j < height; ++j){
+            board.push_back(Piece(Color::black, PieceType::king));
+        }
+    }
+    
+    // std::cout << "Dlugosc: " << board.size() << "\n";
