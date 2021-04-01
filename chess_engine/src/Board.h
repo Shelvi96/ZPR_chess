@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "piece.h"
+#include "Piece.h"
 
 
 class Board {
@@ -14,11 +14,28 @@ private:
     int height;
     int width;
 
+    Color activeColor;
+    bool castlingWhiteK;
+    bool castlingWhiteQ;
+    bool castlingBlackK;
+    bool castlingBlackQ;
+
+    int enPassantSquare;
+    int halfmoveClock;
+    int fullmoveNumber;
+
 public:
     Board();
     explicit Board(const std::string& fen);
     ~Board();
 
+    int getWidth() const;
+
+    int getHeight() const;
+
+    Color getActiveColor();
+
+    std::vector<Piece> getBoard();
 
     void printBoard();
 };

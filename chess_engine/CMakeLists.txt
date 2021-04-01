@@ -8,12 +8,14 @@ set(PYTHON_INCLUDE "/usr/include/python3.8")
 find_package(PythonLibs REQUIRED)
 
 add_library(chesslib SHARED 
-    src/piece.h
-    src/piece.cpp
-    src/board.h
-    src/board.cpp
-    src/move.h
-    src/move.cpp
+    src/Piece.h
+    src/Piece.cpp
+    src/Board.h
+    src/Board.cpp
+    src/Move.h
+    src/Move.cpp
+    src/MoveGenerator.h
+    src/MoveGenerator.cpp
     )
 
 include_directories(${PYTHON_INCLUDE_DIRS})

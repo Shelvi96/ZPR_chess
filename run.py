@@ -5,7 +5,7 @@ from ctypes import *
 libchesslib = CDLL("chess_engine/libchesslib.so") 
 
 
-libchesslib._Z11printDupskov() 
+libchesslib._Z6dupskov() 
 
 
 if __name__ == '__main__':
