@@ -33,8 +33,10 @@ void MoveGenerator::generatePawnMoves() {
     for(int i = 0; i < currentBoard.getHeight(); ++i) {
         for(int j = 0; j < currentBoard.getWidth(); ++j) {
             int curSquare = i * currentBoard.getWidth() + j;
-
-            if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::pawn) {
+            
+            // move only active sides pawns
+            if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::pawn
+                && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
                 forwardPawnMoves(curSquare, i);
             }
         }
@@ -43,41 +45,38 @@ void MoveGenerator::generatePawnMoves() {
 
 
 void MoveGenerator::forwardPawnMoves(int curSquare, int curRow) {
-    // move only active sides pieces
-    if(currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
-        // check color and calculate values
-        int nextSquare;
-        int doubleSquare;
-        int lastRank;
-        int secondRank;
-        if(currentBoard.getBoard()[curSquare].getColor() == Color::white) {
-            nextSquare = curSquare + currentBoard.getWidth();
-            doubleSquare = nextSquare + currentBoard.getWidth();
-            lastRank = currentBoard.getHeight() - 1;
-            secondRank = 1;
+    // check color and calculate values
+    int nextSquare;
+    int doubleSquare;
+    int lastRank;
+    int secondRank;
+    if(currentBoard.getBoard()[curSquare].getColor() == Color::white) {
+        nextSquare = curSquare + currentBoard.getWidth();
+        doubleSquare = nextSquare + currentBoard.getWidth();
+        lastRank = currentBoard.getHeight() - 1;
+        secondRank = 1;
+    } else {
+        nextSquare = curSquare - currentBoard.getWidth();
+        doubleSquare = nextSquare - currentBoard.getWidth();
+        lastRank = 0;
+        secondRank = currentBoard.getHeight() - 2;
+    }
+
+    // generate basic one square forward moves
+    if(currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty){
+        // pawn promotes when it reaches last rank
+        if(nextSquare / currentBoard.getWidth() == lastRank) {
+            promotion(curSquare, nextSquare, Color::white);
         } else {
-            nextSquare = curSquare - currentBoard.getWidth();
-            doubleSquare = nextSquare - currentBoard.getWidth();
-            lastRank = 0;
-            secondRank = currentBoard.getHeight() - 2;
+            moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), -1);
         }
+    }
 
-        // generate basic one square forward moves
-        if(currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty){
-            // pawn promotes when it reaches last rank
-            if(nextSquare / currentBoard.getWidth() == lastRank) {
-                promotion(curSquare, nextSquare, Color::white);
-            } else {
-                moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), -1);
-            }
-        }
-
-        // generate two squares forward moves
-        if(curRow == secondRank && currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty
-           && currentBoard.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
-            // en passant square occurs only in this case
-            moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), nextSquare);
-        }
+    // generate two squares forward moves
+    if(curRow == secondRank && currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty
+       && currentBoard.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
+        // en passant square occurs only in this case
+        moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), nextSquare);
     }
 }
 
