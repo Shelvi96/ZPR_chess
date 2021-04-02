@@ -21,6 +21,7 @@ class MoveGenerator {
         ~MoveGenerator();
 
         void generatePawnMoves();
+        void forwardPawnMoves(int curSquare, int curRow);
         void promotion(int curSquare, int newSquare, Color color);
 
         void generateRookMoves();

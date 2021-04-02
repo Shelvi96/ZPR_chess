@@ -18,12 +18,11 @@ MoveGenerator::MoveGenerator(Board board) {
     generatePawnMoves();
     std::cout << "Pawns: " << moves.size() << "\n";
     generateRookMoves();
-    std::cout << "+ Rooks: " << moves.size() << "\n";
+    std::cout << "Rooks: " << moves.size() << "\n";
     generateBishopMoves();
-    std::cout << "+ Bishops: " << moves.size() << "\n";
+    std::cout << "Bishops: " << moves.size() << "\n";
 
-
-    // std::cout << moves.size();
+//    std::cout << moves.size();
 }
 
 // TODO: check and pin handling
@@ -36,50 +35,48 @@ void MoveGenerator::generatePawnMoves() {
             int curSquare = i * currentBoard.getWidth() + j;
 
             if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::pawn) {
-
-                // Forward moves generation
-                if(currentBoard.getBoard()[curSquare].getColor() == Color::white && currentBoard.getActiveColor() == Color::white) {
-
-                    // basic one square forward moves
-                    int nextSquare = curSquare + currentBoard.getWidth();
-                    if(currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty){
-                        // pawn promotes when it reaches last rank
-                        if(i == currentBoard.getHeight() - 2) {
-                            promotion(curSquare, nextSquare, Color::white);
-                        } else {
-                            moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), -1);
-                        }
-                    }
-
-                    // two squares forward moves
-                    int doubleSquare = nextSquare + currentBoard.getWidth();
-                    if(i == 1 && currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty
-                        && currentBoard.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
-                        // en passant square occurs only in this case
-                        moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), nextSquare);
-                    }
-                }
-
-                if(currentBoard.getBoard()[curSquare].getColor() == Color::black && currentBoard.getActiveColor() == Color::black) {
-                    // basic one square forward moves
-                    int nextSquare = curSquare - currentBoard.getWidth();
-                    if(currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty){
-                        // pawn promotes when it reaches last rank
-                        if(i == 1) {
-                            promotion(curSquare, nextSquare, Color::black);
-                        } else {
-                            moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), -1);
-                        }
-                    }
-
-                    // two squares forward moves
-                    int doubleSquare = nextSquare - currentBoard.getWidth();
-                    if(i == currentBoard.getHeight() - 2 && currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty
-                        && currentBoard.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
-                        moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), nextSquare);
-                    }
-                }
+                forwardPawnMoves(curSquare, i);
             }
+        }
+    }
+}
+
+
+void MoveGenerator::forwardPawnMoves(int curSquare, int curRow) {
+    // move only active sides pieces
+    if(currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
+        // check color and calculate values
+        int nextSquare;
+        int doubleSquare;
+        int lastRank;
+        int secondRank;
+        if(currentBoard.getBoard()[curSquare].getColor() == Color::white) {
+            nextSquare = curSquare + currentBoard.getWidth();
+            doubleSquare = nextSquare + currentBoard.getWidth();
+            lastRank = currentBoard.getHeight() - 1;
+            secondRank = 1;
+        } else {
+            nextSquare = curSquare - currentBoard.getWidth();
+            doubleSquare = nextSquare - currentBoard.getWidth();
+            lastRank = 0;
+            secondRank = currentBoard.getHeight() - 2;
+        }
+
+        // generate basic one square forward moves
+        if(currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty){
+            // pawn promotes when it reaches last rank
+            if(nextSquare / currentBoard.getWidth() == lastRank) {
+                promotion(curSquare, nextSquare, Color::white);
+            } else {
+                moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), -1);
+            }
+        }
+
+        // generate two squares forward moves
+        if(curRow == secondRank && currentBoard.getBoard()[nextSquare].getPieceType() == PieceType::empty
+           && currentBoard.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
+            // en passant square occurs only in this case
+            moves.emplace_back(curSquare, nextSquare, Piece(Color::empty, PieceType::empty), nextSquare);
         }
     }
 }
@@ -166,10 +163,8 @@ void MoveGenerator::generateBishopMoves() {
 }
 
 
-
-
 void dupsko() {
-    Board board("b2k4/8/4B3/2K5/4N3/8/5Rp1/n6R b - - 0 1");
+    Board board("rnbqkbnr/1ppppp1p/6p1/p7/P3P3/6P1/1PPP1P1P/RNBQKBNR w KQkq - 0 1");
 
     board.printBoard();
 
