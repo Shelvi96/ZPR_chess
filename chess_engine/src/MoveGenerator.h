@@ -26,6 +26,7 @@ class MoveGenerator {
 
         void generateRookMoves();
         void generateBishopMoves();
+        void generateKnightMoves();
 };
 
 void dupsko();

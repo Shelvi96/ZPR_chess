@@ -21,7 +21,8 @@ MoveGenerator::MoveGenerator(Board board) {
     std::cout << "Rooks: " << moves.size() << "\n";
     generateBishopMoves();
     std::cout << "Bishops: " << moves.size() << "\n";
-
+    generateKnightMoves();
+    std::cout << "Knights: " << moves.size() << "\n";
 //    std::cout << moves.size();
 }
 
@@ -33,7 +34,7 @@ void MoveGenerator::generatePawnMoves() {
     for(int i = 0; i < currentBoard.getHeight(); ++i) {
         for(int j = 0; j < currentBoard.getWidth(); ++j) {
             int curSquare = i * currentBoard.getWidth() + j;
-            
+
             // move only active sides pawns
             if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::pawn
                 && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
@@ -96,7 +97,8 @@ void MoveGenerator::generateRookMoves() {
         for (int j = 0; j < currentBoard.getWidth(); ++j) {
             int curSquare = i * currentBoard.getWidth() + j;
 
-            if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::rook && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
+            if(currentBoard.getBoard()[curSquare].getPieceType() == PieceType::rook
+                && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
                 // increments [x, y]
                 int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
@@ -132,7 +134,8 @@ void MoveGenerator::generateBishopMoves() {
         for (int j = 0; j < currentBoard.getWidth(); ++j) {
             int curSquare = i * currentBoard.getWidth() + j;
 
-            if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::bishop && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
+            if (currentBoard.getBoard()[curSquare].getPieceType() == PieceType::bishop
+                && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
                 // increments [x, y]
                 int directions[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
 
@@ -162,8 +165,34 @@ void MoveGenerator::generateBishopMoves() {
 }
 
 
+void MoveGenerator::generateKnightMoves() {
+    // i - current row
+    // j - current file
+    for(int i = 0; i < currentBoard.getHeight(); ++i) {
+        for (int j = 0; j < currentBoard.getWidth(); ++j) {
+            int curSquare = i * currentBoard.getWidth() + j;
+            if(currentBoard.getBoard()[curSquare].getPieceType() == PieceType::knight
+               && currentBoard.getBoard()[curSquare].getColor() == currentBoard.getActiveColor()) {
+                int knightMoves[8][2] = {{2, 1}, {2, -1}, {-2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, -2}, {-1, 2}};
+                // iteration over possible knight moves
+                for(auto & direction : knightMoves) {
+                    int curRow = i + direction[0];
+                    int curFile = j + direction[1];
+                    int square = curRow * currentBoard.getWidth() + curFile;
+                    if(0 <= curRow && curRow < currentBoard.getHeight() && 0 <= curFile && curFile < currentBoard.getWidth()
+                          && (currentBoard.getBoard()[square].getPieceType() == PieceType::empty
+                          || currentBoard.getBoard()[square].getColor() != currentBoard.getActiveColor())) {
+                        moves.emplace_back(curSquare, square, Piece(Color::empty, PieceType::empty), -1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 void dupsko() {
-    Board board("rnbqkbnr/1ppppp1p/6p1/p7/P3P3/6P1/1PPP1P1P/RNBQKBNR w KQkq - 0 1");
+    Board board("8/P5N1/8/3N1p2/8/8/P7/1B6 w - - 0 1");
 
     board.printBoard();
 
