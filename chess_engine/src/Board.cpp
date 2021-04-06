@@ -152,6 +152,10 @@ Color Board::getActiveColor() {
     return activeColor;
 }
 
+int Board::getEnPassantSquare() const {
+    return enPassantSquare;
+}
+
 
 template<typename A>
 void printVector(std::vector<A> &T) {

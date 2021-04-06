@@ -37,6 +37,8 @@ public:
 
     std::vector<Piece> getBoard();
 
+    int getEnPassantSquare() const;
+
     void printBoard();
 };
 

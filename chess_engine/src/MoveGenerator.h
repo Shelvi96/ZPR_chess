@@ -12,21 +12,29 @@
 
 
 class MoveGenerator {
-    private:
-        std::vector<Move> moves;
-        Board currentBoard;
-    public:
-        MoveGenerator();
-        explicit MoveGenerator(Board board);
-        ~MoveGenerator();
+private:
+    std::vector<Move> moves;
+    Board currentBoard;
+    int rookDirections[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    int bishopDirections[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+    int knightMoves[8][2] = {{2, 1}, {2, -1}, {-2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, -2}, {-1, 2}};
+    int kingMoves[8][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
 
-        void generatePawnMoves();
-        void forwardPawnMoves(int curSquare, int curRow);
-        void promotion(int curSquare, int newSquare, Color color);
+public:
+    MoveGenerator();
+    explicit MoveGenerator(Board board);
+    ~MoveGenerator();
 
-        void generateRookMoves();
-        void generateBishopMoves();
-        void generateKnightMoves();
+    void generatePawnMoves(int curSquare, int curRow, int curFile);
+    void forwardPawnMoves(int curSquare, int curRow);
+    void pawnCaptures(int curSquare, int curRow, int curFile);
+    void promotion(int curSquare, int newSquare, Color color);
+
+    void generateRookMoves(int curSquare, int curRow, int curFile);
+    void generateBishopMoves(int curSquare, int curRow, int curFile);
+    void generateKnightMoves(int curSquare, int curRow, int curFile);
+    void generateQueenMoves(int curSquare, int curRow, int curFile);
+    void generateKingMoves(int curSquare, int curRow, int curFile);
 };
 
 void dupsko();
