@@ -22,22 +22,32 @@ private:
 
 public:
     MoveGenerator();
-    explicit MoveGenerator(Board board);
+    explicit MoveGenerator(Board& board);
     ~MoveGenerator();
 
-    void generatePawnMoves(int curSquare, int curRow, int curFile);
-    void forwardPawnMoves(int curSquare, int curRow);
-    void pawnCaptures(int curSquare, int curRow, int curFile);
+    void generatePawnMoves(Board& board, int curSquare, int curRow, int curFile);
+    void forwardPawnMoves(Board& board, int curSquare, int curRow);
+    void pawnCaptures(Board& board, int curSquare, int curRow, int curFile);
     void promotion(int curSquare, int newSquare, Color color);
 
-    void generateRookMoves(int curSquare, int curRow, int curFile);
-    void generateBishopMoves(int curSquare, int curRow, int curFile);
-    void generateKnightMoves(int curSquare, int curRow, int curFile);
-    void generateQueenMoves(int curSquare, int curRow, int curFile);
-    void generateKingMoves(int curSquare, int curRow, int curFile);
-};
 
-void dupsko();
+    void generateRookMoves(Board& board, int curSquare, int curRow, int curFile);
+    void generateBishopMoves(Board& board, int curSquare, int curRow, int curFile);
+    void generateKnightMoves(Board& board, int curSquare, int curRow, int curFile);
+    void generateQueenMoves(Board& board, int curSquare, int curRow, int curFile);
+    void generateKingMoves(Board& board, int curSquare, int curRow, int curFile);
+
+    bool isChecking(Board& board);
+
+    std::vector<Move> getMoves();
+
+    Board MakeAMove(Board& board, Move move);
+    Board MakeCastlingMove(Board& board, Move move);
+
+    std::vector<Board> getPossibleBoards(Board& board);
+    bool isMoveLegal(Board board);
+
+};
 
 
 #endif // MOVEGENERATOR_H

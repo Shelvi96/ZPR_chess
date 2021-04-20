@@ -29,7 +29,6 @@ Board::Board() {
 }
 
 
-// TODO FEN VALIDATION IDK ?
 // works for valid FEN
 Board::Board(const std::string& fen) {
     width = 8;
@@ -121,17 +120,14 @@ Board::Board(const std::string& fen) {
 Board::~Board() = default;
 
 
-void Board::printBoard() {
-    for(int i = width * height - 1; i >= 0; --i){
-        board[i].printPiece();
-        if(i % width == 0) {
-            std::cout << "\n";
-        }
+std::vector<Piece> Board::getBoard() {
+    return board;
+}
 
-    }
 
-    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
-    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
+void Board::setPiece(int square, const Piece& piece) {
+    if(0 <= square && square < board.size())
+        board[square] = piece;
 }
 
 
@@ -144,16 +140,77 @@ int Board::getHeight() const {
     return height;
 }
 
-std::vector<Piece> Board::getBoard() {
-    return board;
-}
 
 Color Board::getActiveColor() {
     return activeColor;
 }
 
+
+void Board::changeActiveColor() {
+    if(activeColor == Color::white) {
+        activeColor = Color::black;
+    } else {
+        activeColor = Color::white;
+    }
+}
+
+
+bool Board::getCastlingWhiteK() const {
+    return castlingWhiteK;
+}
+
+bool Board::getCastlingWhiteQ() const {
+    return castlingWhiteQ;
+}
+
+bool Board::getCastlingBlackK() const {
+    return castlingBlackK;
+}
+
+bool Board::getCastlingBlackQ() const {
+    return castlingBlackQ;
+}
+
+
+void Board::takeAwayCastlingWhiteK() {
+    castlingWhiteK = false;
+}
+
+void Board::takeAwayCastlingWhiteQ() {
+    castlingWhiteQ = false;
+}
+
+void Board::takeAwayCastlingBlackK() {
+    castlingBlackK = false;
+}
+
+void Board::takeAwayCastlingBlackQ() {
+    castlingBlackQ = false;
+}
+
+
 int Board::getEnPassantSquare() const {
     return enPassantSquare;
+}
+
+
+void Board::setEnPassantSquare(int square) {
+    if(0 <= square && square < board.size())
+        enPassantSquare = square;
+}
+
+
+void Board::printBoard() {
+    for(int i = width * height - 1; i >= 0; --i){
+        board[i].printPiece();
+        if(i % width == 0) {
+            std::cout << "\n";
+        }
+
+    }
+
+    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
+    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
 }
 
 

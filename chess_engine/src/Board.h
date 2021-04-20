@@ -29,15 +29,26 @@ public:
     explicit Board(const std::string& fen);
     ~Board();
 
-    int getWidth() const;
+    std::vector<Piece> getBoard();
+    void setPiece(int square, const Piece& piece);
 
+    int getWidth() const;
     int getHeight() const;
 
     Color getActiveColor();
+    void changeActiveColor();
 
-    std::vector<Piece> getBoard();
+    bool getCastlingWhiteK() const;
+    bool getCastlingWhiteQ() const;
+    bool getCastlingBlackK() const;
+    bool getCastlingBlackQ() const;
+    void takeAwayCastlingWhiteK();
+    void takeAwayCastlingWhiteQ();
+    void takeAwayCastlingBlackK();
+    void takeAwayCastlingBlackQ();
 
     int getEnPassantSquare() const;
+    void setEnPassantSquare(int square);
 
     void printBoard();
 };

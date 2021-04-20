@@ -12,16 +12,24 @@
 class Move {
 
     private:
-        int from;
+
+    int from;
         int to;
         Piece promoteTo;
         int enPassantSquare;
-
+        bool castling;
 
     public:
         Move();
-        Move(int currentSquare, int newSquare, const Piece& newPiece, int enPassant);
+        Move(int currentSquare, int targetSquare, const Piece& newPiece = Piece(), int enPassant = -1, bool castling = false);
         ~Move();
+
+        int getFrom() const;
+        int getTo() const;
+        Piece getPromoteTo();
+        int getEnPassantSquare() const;
+        bool isItCastling() const;
+
 };
 
 

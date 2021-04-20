@@ -16,6 +16,8 @@ add_library(chesslib SHARED
     src/Move.cpp
     src/MoveGenerator.h
     src/MoveGenerator.cpp
+    src/GameTree.h
+    src/GameTree.cpp
     )
 
 include_directories(${PYTHON_INCLUDE_DIRS})
