@@ -18,50 +18,72 @@ void Node::generateChildren(int maxDepth) {
 
     moveGenerator = MoveGenerator(board_);
     std::vector<Board> boards = moveGenerator.getPossibleBoards(board_);
+
+
     for(auto & newBoard : boards)
-        children.emplace_back(newBoard, depth_ + 1);
+        children.push_back(new Node(newBoard, depth_ + 1));
     if(depth_ < maxDepth) {
         for(auto & child : children)
-            child.generateChildren(maxDepth);
+            child->generateChildren(maxDepth);
     }
+
 }
 
 int Node::numberOfChildren() {
     return children.size();
 }
 
-std::vector<Node> &Node::getChildren() {
+std::vector<Node*> &Node::getChildren() {
     return children;
 }
 
 
-Node GameTree::getRoot() {
+Node* GameTree::getRoot() {
     return root;
 }
 
+GameTree::GameTree() = default;
 
 GameTree::GameTree(Board board) {
-    root = Node(board, 0);
+    root = new Node(board, 0);
 }
 
 void GameTree::generateTree(int depth) {
-    root.generateChildren(depth);
+    root->generateChildren(depth);
+}
+
+void GameTree::deleteTree(Node *node) {
+    for(auto &child : node->getChildren()){
+        deleteTree(child);
+    }
+    delete node;
+}
+
+int GameTree::countPossibleBoards(Node *node, int level) {
+    if(node == nullptr) {
+        return -1;
+    }
+    if(level == 1) {
+        return node->numberOfChildren();
+    } else {
+        int counter = 0;
+        for(auto &child : node->getChildren()){
+            counter = counter + countPossibleBoards(child, level - 1);
+        }
+        return counter;
+    }
 }
 
 
-
-
 void dupsko() {
-    std::cout << "Hello its me\n";
+    GameTree tree(Board("rnbqk1nr/8/pppppppp/8/8/PPPPPPPP/8/RNBQK1NR w KQkq - 0 1"));
 
-    GameTree tree(Board("r2qkbnr/p1pppppp/bpn5/8/2P1P3/5N2/PP1P1PPP/RNBQK2R b KQkq - 0 1"));
+    tree.generateTree(3);
 
-    tree.generateTree(1);
-    int generatedMoves = 0;
-    for(auto & child : tree.getRoot().getChildren()){
-        generatedMoves = generatedMoves + child.numberOfChildren();
-    }
+    int generatedMoves = tree.countPossibleBoards(tree.getRoot(), 3);
 
-    std::cout << generatedMoves << "\n";
+    tree.deleteTree(tree.getRoot());
+
+    std::cout << "Generated moves: " << generatedMoves << "\n";
 
 }

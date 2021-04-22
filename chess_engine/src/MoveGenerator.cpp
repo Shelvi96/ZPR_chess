@@ -364,9 +364,9 @@ std::vector<Board> MoveGenerator::getPossibleBoards(Board& board) {
         if(isMoveLegal(temp)) {
             if(move.isItCastling()) {
                 Board temp = MakeCastlingMove(board, move);
-                boards.push_back(temp);
+                boards.emplace_back(temp);
             } else {
-                boards.push_back(temp);
+                boards.emplace_back(temp);
             }
         }
     }

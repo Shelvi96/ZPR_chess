@@ -28,9 +28,9 @@ public:
     Color getColor();
     PieceType getPieceType();
 
-    void setPiece(Color newColor, PieceType newPieceType);
-    void setPieceType(PieceType newPieceType);
-    void setColor(Color newColor);
+    void setPiece(Color& newColor, PieceType& newPieceType);
+    void setPieceType(PieceType& newPieceType);
+    void setColor(Color& newColor);
 
     void printPiece();
 };

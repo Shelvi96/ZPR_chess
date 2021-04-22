@@ -120,7 +120,7 @@ Board::Board(const std::string& fen) {
 Board::~Board() = default;
 
 
-std::vector<Piece> Board::getBoard() {
+std::vector<Piece>& Board::getBoard() {
     return board;
 }
 
@@ -131,17 +131,17 @@ void Board::setPiece(int square, const Piece& piece) {
 }
 
 
-int Board::getWidth() const {
+const int& Board::getWidth() const {
     return width;
 }
 
 
-int Board::getHeight() const {
+const int& Board::getHeight() const {
     return height;
 }
 
 
-Color Board::getActiveColor() {
+Color& Board::getActiveColor() {
     return activeColor;
 }
 
@@ -206,11 +206,10 @@ void Board::printBoard() {
         if(i % width == 0) {
             std::cout << "\n";
         }
-
     }
-
-    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
-    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
+//
+//    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
+//    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
 }
 
 

@@ -34,18 +34,18 @@ PieceType Piece::getPieceType() {
 }
 
 
-void Piece::setPiece(Color newColor, PieceType newPieceType) {
+void Piece::setPiece(Color& newColor, PieceType& newPieceType) {
     color = newColor;
     pieceType = newPieceType;
 }
 
 
-void Piece::setPieceType(PieceType newPieceType) {
+void Piece::setPieceType(PieceType& newPieceType) {
     pieceType = newPieceType;
 }
 
 
-void Piece::setColor(Color newColor) {
+void Piece::setColor(Color& newColor) {
     color = newColor;
 }
 

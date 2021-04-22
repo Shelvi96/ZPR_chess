@@ -14,29 +14,33 @@ class Node {
 private:
     Board board_;
     MoveGenerator moveGenerator;
-    std::vector<Node> children;
+    std::vector<Node*> children;
     int depth_;
 public:
     Node();
     explicit Node(const Board& board, int depth);
-
     Board &getBoard();
     void generateChildren(int maxDepth);
     int numberOfChildren();
-    std::vector<Node> &getChildren();
+    std::vector<Node*> &getChildren();
 };
 
 
 
 class GameTree {
 private:
-    Node root;
+    Node* root{};
 
 public:
-    Node getRoot();
+    Node* getRoot();
+    GameTree();
     explicit GameTree(Board board);
     void generateTree(int depth);
+    void deleteTree(Node* node);
+    int countPossibleBoards(Node* node, int level);
 };
+
+
 
 void dupsko();
 
