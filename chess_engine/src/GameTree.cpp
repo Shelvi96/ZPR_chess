@@ -76,11 +76,15 @@ int GameTree::countPossibleBoards(Node *node, int level) {
 
 
 void dupsko() {
-    GameTree tree(Board("rnbqk1nr/8/pppppppp/8/8/PPPPPPPP/8/RNBQK1NR w KQkq - 0 1"));
+    GameTree tree(Board("r3k2r/pppq1ppp/2np1n2/2b1p1B1/2B1P1b1/2NP1N2/PPPQ1PPP/R3K2R w KQkq - 4 8"));
 
-    tree.generateTree(3);
+    tree.generateTree(2);
 
-    int generatedMoves = tree.countPossibleBoards(tree.getRoot(), 3);
+//     for(auto & node : tree.getRoot()->getChildren()) {
+//         std::cout << node->getBoard().getPreviousMove() << ": " << tree.countPossibleBoards(node, 1)<< "\n";
+//     }
+
+    int generatedMoves = tree.countPossibleBoards(tree.getRoot(), 2);
 
     tree.deleteTree(tree.getRoot());
 

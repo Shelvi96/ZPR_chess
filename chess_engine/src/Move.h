@@ -13,15 +13,16 @@ class Move {
 
     private:
 
-    int from;
+        int from;
         int to;
         Piece promoteTo;
         int enPassantSquare;
         bool castling;
+        bool enPassant;
 
     public:
         Move();
-        Move(int currentSquare, int targetSquare, const Piece& newPiece = Piece(), int enPassant = -1, bool castling = false);
+        Move(int currentSquare, int targetSquare, const Piece& newPiece = Piece(), int enPassant = -1, bool castling = false, bool enPassant_ = false);
         ~Move();
 
         int getFrom() const;
@@ -29,7 +30,9 @@ class Move {
         Piece getPromoteTo();
         int getEnPassantSquare() const;
         bool isItCastling() const;
+        bool isItEnPassant() const;
 
+        std::string printMove();
 };
 
 

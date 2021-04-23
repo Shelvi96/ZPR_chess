@@ -24,9 +24,11 @@ private:
     int halfmoveClock;
     int fullmoveNumber;
 
+    std::string previousMove;
+
 public:
     Board();
-    explicit Board(const std::string& fen);
+    explicit Board(const std::string& fen, std::string prevMove = "00,00");
     ~Board();
 
     std::vector<Piece>& getBoard();
@@ -49,6 +51,9 @@ public:
 
     int getEnPassantSquare() const;
     void setEnPassantSquare(int square);
+
+    void setPreviousMove(std::string prevMove);
+    std::string getPreviousMove();
 
     void printBoard();
 };

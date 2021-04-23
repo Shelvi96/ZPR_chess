@@ -30,7 +30,7 @@ Board::Board() {
 
 
 // works for valid FEN
-Board::Board(const std::string& fen) {
+Board::Board(const std::string& fen, std::string prevMove) {
     width = 8;
     height = 8;
 
@@ -109,11 +109,13 @@ Board::Board(const std::string& fen) {
     if(fenSplit[3] == "-") {
         enPassantSquare = -1;
     } else {
-        enPassantSquare = 8 * ((int)fenSplit[3][1] - '1') + (int)fenSplit[3][0] - 'a';
+//        enPassantSquare = 8 * ('8' - (int)fenSplit[3][1]) + 'h' - (int)fenSplit[3][0];
+        enPassantSquare = 8 * ((int)fenSplit[3][1] - '1') + 'h' - (int)fenSplit[3][0];
     }
 
     halfmoveClock = std::stoi(fenSplit[4]);
     fullmoveNumber = std::stoi(fenSplit[5]);
+    previousMove = prevMove;
 }
 
 
@@ -195,13 +197,14 @@ int Board::getEnPassantSquare() const {
 
 
 void Board::setEnPassantSquare(int square) {
-    if(0 <= square && square < board.size())
-        enPassantSquare = square;
+//    if(-1 <= square && square < board.size())
+    enPassantSquare = square;
 }
 
 
 void Board::printBoard() {
     for(int i = width * height - 1; i >= 0; --i){
+//        std::cout << i;
         board[i].printPiece();
         if(i % width == 0) {
             std::cout << "\n";
@@ -210,6 +213,14 @@ void Board::printBoard() {
 //
 //    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
 //    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
+}
+
+void Board::setPreviousMove(std::string prevMove) {
+    previousMove = prevMove;
+}
+
+std::string Board::getPreviousMove() {
+    return previousMove;
 }
 
 
