@@ -1,8 +1,7 @@
-from flask import render_template, flash, redirect, url_for, request
-from chess_webapp import app, db, bcrypt
-from chess_webapp.models import User
-from chess_webapp.forms import LoginForm, RegistrationForm
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import render_template, redirect, url_for
+from chess_webapp import app
+import pybind11_chessengine
+
 
 @app.route('/')
 @app.route('/home')
@@ -10,39 +9,11 @@ def home():
     return render_template('home.html')
 
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('register.html', title='Register', form=form)
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=True)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
-        flash('Login Unsuccessful. Please check username and password')
-    return render_template('login.html', title='Login', form=form)
-
-
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('home'))
+@app.route("/check/<fen_string>/old/<i_old>.<j_old>/new/<i_new>.<j_new>", methods=['GET'])
+def check_fen(fen_string, i_old, j_old, i_new, j_new):
+    fen_string = fen_string.replace(':', '/')
+    ret = pybind11_chessengine.getNextFen(fen_string, int(i_old), int(j_old), int(i_new), int(j_new))
+    return ret
 
 
 @app.route("/no_access")
@@ -52,6 +23,4 @@ def no_access():
 
 @app.route("/app")
 def app():
-    if not current_user.is_authenticated:
-        return redirect(url_for('no_access'))
     return render_template('app.html', title='App')

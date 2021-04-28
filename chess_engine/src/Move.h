@@ -31,7 +31,6 @@ class Move {
         int getEnPassantSquare() const;
         bool isItCastling() const;
         bool isItEnPassant() const;
-
         std::string printMove();
 };
 

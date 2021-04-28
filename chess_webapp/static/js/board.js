@@ -81,7 +81,7 @@ export class Board {
     field_event(i, j) {
         if (this.active_square) {
             this.get_square(this.active_square[0], this.active_square[1]).classList.remove('active');
-            this.move_pawn(this.active_square[0], this.active_square[1], i, j)
+            this.check_move(this.active_square[0], this.active_square[1], i, j)
             this.active_square = null;
         } else {
             this.get_square(i, j).classList.add('active')
@@ -101,16 +101,25 @@ export class Board {
         }
     }
 
+    check_move(i_old, j_old, i_new, j_new) {
+        const board_config_parsed = this.board_config.replace(/\//g, ":");
+        const board = this;
+        fetch(`/check/${board_config_parsed}/old/${7-i_old}.${7-j_old}/new/${7-i_new}.${7-j_new}`)
+            .then(function (response) {
+                return response.text();
+            }).then(function (newFEN) {
+                if (newFEN !== "") {
+                    document.getElementById('fen').innerHTML = newFEN;
+                    board.move_pawn(i_old, j_old, i_new, j_new);
+                    board.board_config = newFEN;
+                }
+            });
+    }
     move_pawn(i_old, j_old, i_new, j_new) {
-        if (this.fields[i_new][j_new].get_piece()) {
-            return false;
-        }
-        else {
-            const pawn = this.fields[i_old][j_old].get_piece();
-            this.fields[i_old][j_old].set_piece(null)
-            this.fields[i_new][j_new].set_piece(pawn)
-            this.draw_pieces();
-        }
+        const pawn = this.fields[i_old][j_old].get_piece();
+        this.fields[i_old][j_old].set_piece(null);
+        this.fields[i_new][j_new].set_piece(pawn);
+        this.draw_pieces();
     }
 }
 

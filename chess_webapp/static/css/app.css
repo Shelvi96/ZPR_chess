@@ -1,3 +1,13 @@
+.chess_info {
+    height: 100px;
+    min-height: 100px;
+    width: 600px;
+    display: block;
+    margin: auto;
+    font-size: 20px;
+    text-align: center;
+}
+
 .chess_board {
     width: 560px;
     display: grid;

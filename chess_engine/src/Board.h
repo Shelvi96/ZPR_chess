@@ -54,6 +54,7 @@ public:
 
     void setPreviousMove(std::string prevMove);
     std::string getPreviousMove();
+    std::string getFenString();
 
     void printBoard();
 };

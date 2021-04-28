@@ -29,12 +29,6 @@
             <div class="header_content">
                 <div class="header_content_buttons">
                     <button class="header_button" onclick="window.location.href='/home';">Home</button>
-                    {% if current_user.is_authenticated %}
-                        <button class="header_button" onclick="window.location.href='/logout';">Logout</button>
-                    {% else %}
-                        <button class="header_button"  onclick="window.location.href='/register';">Register</button>
-                        <button class="header_button"  onclick="window.location.href='/login';">Login</button>
-                    {% endif %}
                 </div>
                 {% block header %}{% endblock %}
             </div>

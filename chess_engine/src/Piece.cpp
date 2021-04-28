@@ -64,6 +64,26 @@ std::ostream& operator << (std::ostream& os, const PieceType& p) {
 }
 
 
+char Piece::getFenSymbol() {
+    switch(pieceType) {
+        case PieceType::king:
+            return color == Color::white ? 'K': 'k';
+        case PieceType::queen:
+            return color == Color::white ? 'Q' : 'q';
+        case PieceType::rook:
+            return color == Color::white ? 'R': 'r';
+        case PieceType::bishop:
+            return color == Color::white ? 'B': 'b';
+        case PieceType::knight:
+            return color == Color::white ? 'N': 'n';
+        case PieceType::pawn:
+            return color == Color::white ? 'P': 'p' ;
+        default:
+            return '0';
+    }
+}
+
+
 void Piece::printPiece() {
     cout << "(" << color << "," << pieceType << ")";
 }

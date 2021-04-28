@@ -32,6 +32,7 @@ public:
     void setPieceType(PieceType& newPieceType);
     void setColor(Color& newColor);
 
+    char getFenSymbol();
     void printPiece();
 };
 

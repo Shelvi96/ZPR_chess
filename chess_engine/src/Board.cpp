@@ -128,7 +128,7 @@ std::vector<Piece>& Board::getBoard() {
 
 
 void Board::setPiece(int square, const Piece& piece) {
-    if(0 <= square && square < board.size())
+    if(0 <= square && square < (int)board.size())
         board[square] = piece;
 }
 
@@ -221,6 +221,44 @@ void Board::setPreviousMove(std::string prevMove) {
 
 std::string Board::getPreviousMove() {
     return previousMove;
+}
+
+std::string Board::getFenString() {
+    std::string ret = "";
+    int empty = 0;
+    int position = 0;
+    for (auto & piece: board) {
+        ++position;
+        const char fenSymbol = piece.getFenSymbol();
+        if (fenSymbol != '0') {
+            if (empty != 0) {
+                ret += ('0' + empty);
+                empty = 0;
+            }
+            ret += fenSymbol;
+        }
+        else {
+            ++empty;
+        }
+        if (position % width == 0) {
+            if (empty != 0) {
+                ret += ('0' + empty);
+                empty = 0;
+            }
+            ret += '/';
+        }
+    }
+    ret = ret.substr(0, ret.size()-1);
+    reverse(ret.begin(), ret.end());
+    ret += activeColor == Color::white ? " w " : " b ";
+    ret += castlingWhiteK ? 'K' : '-';
+    ret += castlingWhiteQ ? 'Q' : '-';
+    ret += castlingBlackK ? 'k' : '-';
+    ret += castlingBlackQ ? 'q' : '-';
+
+    ret += " - 0 1";
+
+    return ret;
 }
 
 
