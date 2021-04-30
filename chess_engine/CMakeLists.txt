@@ -2,14 +2,22 @@ cmake_minimum_required(VERSION 3.9)
 
 project(chess)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
 set(PYTHON_INCLUDE "/usr/include/python3.8")
 
 find_package(PythonLibs REQUIRED)
 
 add_library(chesslib SHARED 
-    board.h
-    board.cpp
+    src/Piece.h
+    src/Piece.cpp
+    src/Board.h
+    src/Board.cpp
+    src/Move.h
+    src/Move.cpp
+    src/MoveGenerator.h
+    src/MoveGenerator.cpp
+    src/GameTree.h
+    src/GameTree.cpp
     )
 
 include_directories(${PYTHON_INCLUDE_DIRS})
