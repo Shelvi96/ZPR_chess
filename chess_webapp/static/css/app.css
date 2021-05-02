@@ -1,7 +1,7 @@
 .chess_info {
-    height: 100px;
-    min-height: 100px;
-    width: 600px;
+    height: 50px;
+    min-height: 50px;
+    width: 800px;
     display: block;
     margin: auto;
     font-size: 20px;
@@ -15,6 +15,10 @@
     grid-template-columns: repeat(8, 70px);
     grid-template-rows: repeat(8, 70px);
     grid-auto-flow: row;
+}
+.chess_info > div {
+    display: block;
+    margin: auto;
 }
 
 .box {
