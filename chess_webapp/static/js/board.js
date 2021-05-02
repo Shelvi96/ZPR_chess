@@ -36,8 +36,7 @@ export class Board {
         this.board_config = board_config;
         this.active_square = null;
         this.fields = this.init();
-        this.board_config_to_pieces();
-        this.draw_pieces();
+        this.update_board();
     }
 
     init() {
@@ -57,10 +56,6 @@ export class Board {
         return board;
     }
 
-    pieces_to_board_config() {
-        // TODO
-    }
-
     board_config_to_pieces() {
         const pieces_setup = this.board_config.split(' ')[0];
         const board_rows = pieces_setup.split('/');
@@ -70,7 +65,7 @@ export class Board {
             row_idx = 0;
             for (let rank = 0; rank < this.board_size; ++rank) {
                 if (is_numeric(board_rows[file][row_idx]))
-                    rank += parseInt(board_rows[file][row_idx]);
+                    rank += parseInt(board_rows[file][row_idx]) - 1;
                 else
                     this.fields[file][rank].set_piece(parse_string_to_piece(board_rows[file][row_idx]));
                 row_idx += 1;
@@ -110,16 +105,22 @@ export class Board {
             }).then(function (newFEN) {
                 if (newFEN !== "") {
                     document.getElementById('fen').innerHTML = newFEN;
-                    board.move_pawn(i_old, j_old, i_new, j_new);
                     board.board_config = newFEN;
+                    board.update_board();
                 }
             });
     }
-    move_pawn(i_old, j_old, i_new, j_new) {
-        const pawn = this.fields[i_old][j_old].get_piece();
-        this.fields[i_old][j_old].set_piece(null);
-        this.fields[i_new][j_new].set_piece(pawn);
+    update_board() {
+        this.clear_board();
+        this.board_config_to_pieces();
         this.draw_pieces();
+    }
+    clear_board() {
+        for (let file = 0; file < this.board_size; ++file) {
+            for (let rank = 0; rank < this.board_size; ++rank) {
+                this.fields[file][rank].set_piece(null);
+            }
+        }
     }
 }
 

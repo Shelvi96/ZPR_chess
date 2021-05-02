@@ -223,42 +223,69 @@ std::string Board::getPreviousMove() {
     return previousMove;
 }
 
-std::string Board::getFenString() {
-    std::string ret = "";
-    int empty = 0;
-    int position = 0;
+std::string Board::boardToFen() {
+    std::string fen_board = "";
+    int empty = 0, position = 0;
     for (auto & piece: board) {
         ++position;
         const char fenSymbol = piece.getFenSymbol();
         if (fenSymbol != '0') {
             if (empty != 0) {
-                ret += ('0' + empty);
+                fen_board += ('0' + empty);
                 empty = 0;
             }
-            ret += fenSymbol;
+            fen_board += fenSymbol;
         }
         else {
             ++empty;
         }
         if (position % width == 0) {
             if (empty != 0) {
-                ret += ('0' + empty);
+                fen_board += ('0' + empty);
                 empty = 0;
             }
-            ret += '/';
+            fen_board += '/';
         }
     }
-    ret = ret.substr(0, ret.size()-1);
-    reverse(ret.begin(), ret.end());
-    ret += activeColor == Color::white ? " w " : " b ";
-    ret += castlingWhiteK ? 'K' : '-';
-    ret += castlingWhiteQ ? 'Q' : '-';
-    ret += castlingBlackK ? 'k' : '-';
-    ret += castlingBlackQ ? 'q' : '-';
+    fen_board = fen_board.substr(0, fen_board.size()-1);
+    reverse(fen_board.begin(), fen_board.end());
+    return fen_board;
+}
 
-    ret += " - 0 1";
+std::string Board::colorToFen() {
+    return activeColor == Color::white ? "w" : "b";
+}
 
+std::string Board::castlingToFen() {
+    std::string castling = castlingWhiteK ? "K" : "-";
+    castling += castlingWhiteQ ? 'Q' : '-';
+    castling += castlingBlackK ? 'k' : '-';
+    castling += castlingBlackQ ? 'q' : '-';
+    return castling;
+}
+
+std::string Board::enPassantToFen() {
+    if (enPassantSquare == -1)
+        return "-";
+    std::string ret = "";
+    std::string file = "hgfedcba";
+    std::string row = "12345678";
+    ret += file[enPassantSquare % 8];
+    ret += row[enPassantSquare / 8];
     return ret;
+}
+
+std::string Board::halfMoveToFen() {
+    return "0"; // TODO
+}
+
+std::string Board::fullMoveToFen() {
+    return "1"; // TODO
+}
+
+std::string Board::getFenString() {
+    return boardToFen() + " " + colorToFen() + " " + castlingToFen() + " " +
+        enPassantToFen() + " " + halfMoveToFen() + " " + fullMoveToFen();
 }
 
 
