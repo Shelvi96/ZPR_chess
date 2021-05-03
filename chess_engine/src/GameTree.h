@@ -26,7 +26,6 @@ public:
 };
 
 
-
 class GameTree {
 private:
     Node* root{};
@@ -40,8 +39,5 @@ public:
     int countPossibleBoards(Node* node, int level);
 };
 
-
-
-int testfun();
 
 #endif //GAMETREE_H

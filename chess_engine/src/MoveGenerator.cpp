@@ -14,7 +14,6 @@ MoveGenerator::~MoveGenerator() = default;
 
 
 MoveGenerator::MoveGenerator(Board& board) {
-//    currentBoard = board;
 
     for(int curRow = 0; curRow < board.getHeight(); ++curRow) {
         for (int curFile = 0; curFile < board.getWidth(); ++curFile) {
@@ -113,8 +112,6 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
         int nextRow = curRow + direction[0];
         int nextFile = curFile + direction[1];
         int square = nextRow * board.getWidth() + nextFile;
-//        board.getBoard()[curSquare].printPiece();
-//        std::cout << curSquare << " " << square << "\n";
 
         if((0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
             && ((board.getBoard()[square].getColor() != board.getActiveColor() && board.getBoard()[square].getColor() != Color::empty)))) {
@@ -198,7 +195,6 @@ void MoveGenerator::generateBishopMoves(Board& board, int curSquare, int curRow,
 void MoveGenerator::generateKnightMoves(Board& board, int curSquare, int curRow, int curFile) {
 
     if(board.getBoard()[curSquare].getColor() == board.getActiveColor()) {
-
         // iteration over possible knight moves
         for(auto & direction : knightMoves) {
             int nextRow = curRow + direction[0];
@@ -329,7 +325,6 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
         newBoard.setPiece(move.getFrom(), Piece());
     }
 
-
     newBoard.setPreviousMove(move.printMove());
     return newBoard;
 }
@@ -363,10 +358,8 @@ Board MoveGenerator::MakeCastlingMove(Board& board, Move move) {
 bool MoveGenerator::isMoveLegal(Board board) {
     MoveGenerator newMoves = MoveGenerator(board);
 
-
     if(newMoves.isChecking(board))
         return false;
-
 
     return true;
 }

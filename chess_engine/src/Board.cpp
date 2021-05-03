@@ -109,7 +109,6 @@ Board::Board(const std::string& fen, std::string prevMove) {
     if(fenSplit[3] == "-") {
         enPassantSquare = -1;
     } else {
-//        enPassantSquare = 8 * ('8' - (int)fenSplit[3][1]) + 'h' - (int)fenSplit[3][0];
         enPassantSquare = 8 * ((int)fenSplit[3][1] - '1') + 'h' - (int)fenSplit[3][0];
     }
 
@@ -197,22 +196,17 @@ int Board::getEnPassantSquare() const {
 
 
 void Board::setEnPassantSquare(int square) {
-//    if(-1 <= square && square < board.size())
     enPassantSquare = square;
 }
 
 
 void Board::printBoard() {
     for(int i = width * height - 1; i >= 0; --i){
-//        std::cout << i;
         board[i].printPiece();
         if(i % width == 0) {
             std::cout << "\n";
         }
     }
-//
-//    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
-//    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
 }
 
 void Board::setPreviousMove(std::string prevMove) {

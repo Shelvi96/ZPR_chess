@@ -73,3 +73,4 @@ int GameTree::countPossibleBoards(Node *node, int level) {
         return counter;
     }
 }
+

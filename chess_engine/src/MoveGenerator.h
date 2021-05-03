@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-
 #include "Board.h"
 #include "Piece.h"
 #include "Move.h"
@@ -48,6 +47,5 @@ public:
     bool isMoveLegal(Board board);
 
 };
-
 
 #endif // MOVEGENERATOR_H
