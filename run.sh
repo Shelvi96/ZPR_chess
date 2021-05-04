@@ -1,5 +1,10 @@
 #!/bin/sh
 echo "Chess webapp"
+if ! cmake --version &>/dev/null; then
+   echo "Cmake required! Install cmake==3.9+"
+   exit 1
+fi
+
 cd chess_engine
 if [ ! -d "./dependencies/pybind11" ];
 then
