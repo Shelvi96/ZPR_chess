@@ -44,10 +44,11 @@ bool Move::isItEnPassant() const {
 std::string Move::printMove() {
     std::string file = "hgfedcba";
     std::string row = "12345678";
-    std::string ret = "00,00";
-    ret[0] = file[from % 8];
-    ret[1] = row[from / 8];
-    ret[3] = file[to % 8];
-    ret[4] = row[to / 8];
+    std::string ret = "";
+    ret += file[from % 8];
+    ret += row[from / 8];
+    ret += ",";
+    ret += file[to % 8];
+    ret += row[to / 8];
     return ret;
 }

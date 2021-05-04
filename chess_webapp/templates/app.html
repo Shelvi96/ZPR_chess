@@ -5,6 +5,9 @@
 {% endblock %}
 {% block content %}
     <div class="default_wrapper">
+        <div class="chess_info">
+            <div id="fen"></div>
+        </div>
         <div class="chess_board">
             {% for i in range(0,8) %}
                 {% for j in range(0,8) %}

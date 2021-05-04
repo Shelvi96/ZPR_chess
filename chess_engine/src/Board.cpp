@@ -109,7 +109,6 @@ Board::Board(const std::string& fen, std::string prevMove) {
     if(fenSplit[3] == "-") {
         enPassantSquare = -1;
     } else {
-//        enPassantSquare = 8 * ('8' - (int)fenSplit[3][1]) + 'h' - (int)fenSplit[3][0];
         enPassantSquare = 8 * ((int)fenSplit[3][1] - '1') + 'h' - (int)fenSplit[3][0];
     }
 
@@ -128,7 +127,7 @@ std::vector<Piece>& Board::getBoard() {
 
 
 void Board::setPiece(int square, const Piece& piece) {
-    if(0 <= square && square < board.size())
+    if(0 <= square && square < (int)board.size())
         board[square] = piece;
 }
 
@@ -197,22 +196,17 @@ int Board::getEnPassantSquare() const {
 
 
 void Board::setEnPassantSquare(int square) {
-//    if(-1 <= square && square < board.size())
     enPassantSquare = square;
 }
 
 
 void Board::printBoard() {
     for(int i = width * height - 1; i >= 0; --i){
-//        std::cout << i;
         board[i].printPiece();
         if(i % width == 0) {
             std::cout << "\n";
         }
     }
-//
-//    std::cout << castlingWhiteK << " " << castlingWhiteQ << " " << castlingBlackK << " " << castlingBlackQ << "\n";
-//    std::cout << enPassantSquare << " " << halfmoveClock << " " << fullmoveNumber << "\n";
 }
 
 void Board::setPreviousMove(std::string prevMove) {
@@ -221,6 +215,71 @@ void Board::setPreviousMove(std::string prevMove) {
 
 std::string Board::getPreviousMove() {
     return previousMove;
+}
+
+std::string Board::boardToFen() {
+    std::string fen_board = "";
+    int empty = 0, position = 0;
+    for (auto & piece: board) {
+        ++position;
+        const char fenSymbol = piece.getFenSymbol();
+        if (fenSymbol != '0') {
+            if (empty != 0) {
+                fen_board += ('0' + empty);
+                empty = 0;
+            }
+            fen_board += fenSymbol;
+        }
+        else {
+            ++empty;
+        }
+        if (position % width == 0) {
+            if (empty != 0) {
+                fen_board += ('0' + empty);
+                empty = 0;
+            }
+            fen_board += '/';
+        }
+    }
+    fen_board = fen_board.substr(0, fen_board.size()-1);
+    reverse(fen_board.begin(), fen_board.end());
+    return fen_board;
+}
+
+std::string Board::colorToFen() {
+    return activeColor == Color::white ? "w" : "b";
+}
+
+std::string Board::castlingToFen() {
+    std::string castling = castlingWhiteK ? "K" : "-";
+    castling += castlingWhiteQ ? 'Q' : '-';
+    castling += castlingBlackK ? 'k' : '-';
+    castling += castlingBlackQ ? 'q' : '-';
+    return castling;
+}
+
+std::string Board::enPassantToFen() {
+    if (enPassantSquare == -1)
+        return "-";
+    std::string ret = "";
+    std::string file = "hgfedcba";
+    std::string row = "12345678";
+    ret += file[enPassantSquare % 8];
+    ret += row[enPassantSquare / 8];
+    return ret;
+}
+
+std::string Board::halfMoveToFen() {
+    return "0"; // TODO
+}
+
+std::string Board::fullMoveToFen() {
+    return "1"; // TODO
+}
+
+std::string Board::getFenString() {
+    return boardToFen() + " " + colorToFen() + " " + castlingToFen() + " " +
+        enPassantToFen() + " " + halfMoveToFen() + " " + fullMoveToFen();
 }
 
 

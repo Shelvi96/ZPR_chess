@@ -26,6 +26,12 @@ private:
 
     std::string previousMove;
 
+    std::string boardToFen();
+    std::string colorToFen();
+    std::string castlingToFen();
+    std::string enPassantToFen();
+    std::string halfMoveToFen();
+    std::string fullMoveToFen();
 public:
     Board();
     explicit Board(const std::string& fen, std::string prevMove = "00,00");
@@ -54,6 +60,7 @@ public:
 
     void setPreviousMove(std::string prevMove);
     std::string getPreviousMove();
+    std::string getFenString();
 
     void printBoard();
 };

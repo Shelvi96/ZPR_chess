@@ -36,8 +36,7 @@ export class Board {
         this.board_config = board_config;
         this.active_square = null;
         this.fields = this.init();
-        this.board_config_to_pieces();
-        this.draw_pieces();
+        this.update_board();
     }
 
     init() {
@@ -57,10 +56,6 @@ export class Board {
         return board;
     }
 
-    pieces_to_board_config() {
-        // TODO
-    }
-
     board_config_to_pieces() {
         const pieces_setup = this.board_config.split(' ')[0];
         const board_rows = pieces_setup.split('/');
@@ -70,7 +65,7 @@ export class Board {
             row_idx = 0;
             for (let rank = 0; rank < this.board_size; ++rank) {
                 if (is_numeric(board_rows[file][row_idx]))
-                    rank += parseInt(board_rows[file][row_idx]);
+                    rank += parseInt(board_rows[file][row_idx]) - 1;
                 else
                     this.fields[file][rank].set_piece(parse_string_to_piece(board_rows[file][row_idx]));
                 row_idx += 1;
@@ -81,7 +76,7 @@ export class Board {
     field_event(i, j) {
         if (this.active_square) {
             this.get_square(this.active_square[0], this.active_square[1]).classList.remove('active');
-            this.move_pawn(this.active_square[0], this.active_square[1], i, j)
+            this.check_move(this.active_square[0], this.active_square[1], i, j)
             this.active_square = null;
         } else {
             this.get_square(i, j).classList.add('active')
@@ -101,15 +96,31 @@ export class Board {
         }
     }
 
-    move_pawn(i_old, j_old, i_new, j_new) {
-        if (this.fields[i_new][j_new].get_piece()) {
-            return false;
-        }
-        else {
-            const pawn = this.fields[i_old][j_old].get_piece();
-            this.fields[i_old][j_old].set_piece(null)
-            this.fields[i_new][j_new].set_piece(pawn)
-            this.draw_pieces();
+    check_move(i_old, j_old, i_new, j_new) {
+        const board_config_parsed = this.board_config.replace(/\//g, ":");
+        const board = this;
+        fetch(`/check/${board_config_parsed}/old/${7-i_old}.${7-j_old}/new/${7-i_new}.${7-j_new}`)
+            .then(function (response) {
+                return response.text();
+            }).then(function (newFEN) {
+                console.log("FEN: ", newFEN);
+                if (newFEN !== "") {
+                    document.getElementById('fen').innerHTML = newFEN;
+                    board.board_config = newFEN;
+                    board.update_board();
+                }
+            });
+    }
+    update_board() {
+        this.clear_board();
+        this.board_config_to_pieces();
+        this.draw_pieces();
+    }
+    clear_board() {
+        for (let file = 0; file < this.board_size; ++file) {
+            for (let rank = 0; rank < this.board_size; ++rank) {
+                this.fields[file][rank].set_piece(null);
+            }
         }
     }
 }

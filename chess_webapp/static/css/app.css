@@ -1,3 +1,13 @@
+.chess_info {
+    height: 50px;
+    min-height: 50px;
+    width: 800px;
+    display: block;
+    margin: auto;
+    font-size: 20px;
+    text-align: center;
+}
+
 .chess_board {
     width: 560px;
     display: grid;
@@ -5,6 +15,10 @@
     grid-template-columns: repeat(8, 70px);
     grid-template-rows: repeat(8, 70px);
     grid-auto-flow: row;
+}
+.chess_info > div {
+    display: block;
+    margin: auto;
 }
 
 .box {

@@ -1,5 +1,5 @@
-#ifndef GLUPIEGOWNO_GAMETREE_H
-#define GLUPIEGOWNO_GAMETREE_H
+#ifndef GAMETREE_H
+#define GAMETREE_H
 
 #include <iostream>
 #include <vector>
@@ -26,7 +26,6 @@ public:
 };
 
 
-
 class GameTree {
 private:
     Node* root{};
@@ -41,7 +40,4 @@ public:
 };
 
 
-
-void dupsko();
-
-#endif //GLUPIEGOWNO_GAMETREE_H
+#endif //GAMETREE_H
