@@ -1,12 +1,10 @@
 import invoke
-import pathlib
 
 
 @invoke.task()
 def build_chees_engine(c):
     """ Build the shared library for the sample C++ code """
     print("Building C++ Library")
-    print(pathlib.Path().absolute())
 
     invoke.run(
         "g++ -O3 -Wall -Werror -shared -std=c++11 -fPIC chess_engine/src/Piece.h chess_engine/src/Piece.cpp "

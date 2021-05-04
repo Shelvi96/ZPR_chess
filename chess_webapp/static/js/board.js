@@ -103,6 +103,7 @@ export class Board {
             .then(function (response) {
                 return response.text();
             }).then(function (newFEN) {
+                console.log("FEN: ", newFEN);
                 if (newFEN !== "") {
                     document.getElementById('fen').innerHTML = newFEN;
                     board.board_config = newFEN;

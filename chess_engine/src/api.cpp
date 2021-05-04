@@ -24,7 +24,5 @@ std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, i
             }
         }
     }
-    if (legalMoves == 0)
-        return (b.getActiveColor() == Color::white ? "GAME OVER : Black wins!" : "GAME OVER  : White wins!");
     return "";
 }

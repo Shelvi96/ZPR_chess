@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(chess)
+project(chessengine)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -shared -std=c++11 -Wall -Wextra -fpic")
-set(PYTHON_INCLUDE "/usr/include/python3.8")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -shared -std=c++11 -Wall -Wextra -fPIC")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../chess_webapp/lib")
 
-find_package(PythonLibs REQUIRED)
-
-add_library(chesslib SHARED 
+include_directories(src)
+add_subdirectory(dependencies/pybind11)
+pybind11_add_module(chessengine
     src/Piece.h
     src/Piece.cpp
     src/Board.h
@@ -20,10 +20,7 @@ add_library(chesslib SHARED
     src/GameTree.cpp
     src/api.h
     src/api.cpp
-    )
+    src/pybind11_wrapper.cpp
+ )
 
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-target_link_libraries(chesslib python3.8)
-
-target_link_libraries(chesslib ${PYTHON_LIBRARIES})
+target_link_libraries(chessengine PUBLIC)

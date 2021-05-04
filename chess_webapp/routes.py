@@ -1,6 +1,6 @@
-from flask import render_template, redirect, url_for
+from flask import render_template
 from chess_webapp import app
-import pybind11_chessengine
+import chessengine
 
 
 @app.route('/')
@@ -12,7 +12,7 @@ def home():
 @app.route("/check/<fen_string>/old/<i_old>.<j_old>/new/<i_new>.<j_new>", methods=['GET'])
 def check_fen(fen_string, i_old, j_old, i_new, j_new):
     fen_string = fen_string.replace(':', '/')
-    ret = pybind11_chessengine.getNextFen(fen_string, int(i_old), int(j_old), int(i_new), int(j_new))
+    ret = chessengine.getNextFen(fen_string, int(i_old), int(j_old), int(i_new), int(j_new))
     return ret
 
 
