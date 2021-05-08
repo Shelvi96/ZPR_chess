@@ -126,15 +126,6 @@ void Board::setPiece(int square, const Piece& piece) {
 }
 
 
-int Board::getWidth() {
-    return WIDTH;
-}
-
-
-int Board::getHeight() {
-    return HEIGHT;
-}
-
 
 Color& Board::getActiveColor() {
     return activeColor_;

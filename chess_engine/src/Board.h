@@ -42,9 +42,6 @@ public:
     std::vector<Piece>& getBoard();
     void setPiece(int square, const Piece& piece);
 
-    static int getWidth();
-    static int getHeight();
-
     Color& getActiveColor();
     void changeActiveColor();
 

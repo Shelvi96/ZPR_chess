@@ -15,10 +15,10 @@ MoveGenerator::~MoveGenerator() = default;
 
 MoveGenerator::MoveGenerator(Board& board) {
 
-    for(int curRow = 0; curRow < board.getHeight(); ++curRow) {
-        for (int curFile = 0; curFile < board.getWidth(); ++curFile) {
+    for(int curRow = 0; curRow < HEIGHT; ++curRow) {
+        for (int curFile = 0; curFile < WIDTH; ++curFile) {
 
-            int curSquare = curRow * board.getWidth() + curFile;
+            int curSquare = curRow * WIDTH + curFile;
 
             switch (board.getBoard()[curSquare].getPieceType()) {
 
@@ -63,21 +63,21 @@ void MoveGenerator::forwardPawnMoves(Board& board, int curSquare, int curRow) {
     int lastRank;
     int secondRank;
     if(board.getBoard()[curSquare].getColor() == Color::WHITE) {
-        nextSquare = curSquare + board.getWidth();
-        doubleSquare = nextSquare + board.getWidth();
-        lastRank = board.getHeight() - 1;
+        nextSquare = curSquare + WIDTH;
+        doubleSquare = nextSquare + WIDTH;
+        lastRank = HEIGHT - 1;
         secondRank = 1;
     } else {
-        nextSquare = curSquare - board.getWidth();
-        doubleSquare = nextSquare - board.getWidth();
+        nextSquare = curSquare - WIDTH;
+        doubleSquare = nextSquare - WIDTH;
         lastRank = 0;
-        secondRank = board.getHeight() - 2;
+        secondRank = HEIGHT - 2;
     }
 
     // generate basic one square forward moves_
     if(board.getBoard()[nextSquare].getPieceType() == PieceType::EMPTY){
         // PAWN promotes when it reaches last rank
-        if(nextSquare / board.getWidth() == lastRank) {
+        if(nextSquare / WIDTH == lastRank) {
             promotion(curSquare, nextSquare, Color::WHITE);
         } else {
             moves_.emplace_back(curSquare, nextSquare);
@@ -101,7 +101,7 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
     if(board.getBoard()[curSquare].getColor() == Color::WHITE) {
         captureSquares[0][0] = 1;
         captureSquares[1][0] = 1;
-        lastRank = board.getHeight() - 1;
+        lastRank = HEIGHT - 1;
     } else {
         captureSquares[0][0] = -1;
         captureSquares[1][0] = -1;
@@ -111,9 +111,9 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
     for(auto & direction : captureSquares) {
         int nextRow = curRow + direction[0];
         int nextFile = curFile + direction[1];
-        int square = nextRow * board.getWidth() + nextFile;
+        int square = nextRow * WIDTH + nextFile;
 
-        if((0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+        if((0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
             && ((board.getBoard()[square].getColor() != board.getActiveColor() && board.getBoard()[square].getColor() != Color::EMPTY)))) {
 
             if(nextRow == lastRank) {
@@ -122,7 +122,7 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
                 moves_.emplace_back(curSquare, square);
             }
         }
-        else if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth() && square == board.getEnPassantSquare()) {
+        else if(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH && square == board.getEnPassantSquare()) {
             moves_.emplace_back(curSquare, square, Piece(), -1, false, true);
         }
     }
@@ -144,19 +144,19 @@ void MoveGenerator::generateRookMoves(Board& board, int curSquare, int curRow, i
         for(auto & direction : rookDirections) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
-            int square = nextRow * board.getWidth() + nextFile;
+            int square = nextRow * WIDTH + nextFile;
 
-            while(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            while(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                   && board.getBoard()[square].getPieceType() == PieceType::EMPTY) {
 
                 moves_.emplace_back(curSquare, square, Piece(Color::EMPTY, PieceType::EMPTY), -1);
                 nextRow = nextRow + direction[0];
                 nextFile = nextFile + direction[1];
-                square = nextRow * board.getWidth() + nextFile;
+                square = nextRow * WIDTH + nextFile;
             }
 
             // captures
-            if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            if(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                && board.getBoard()[square].getColor() != board.getActiveColor()) {
                 moves_.emplace_back(curSquare, square);
             }
@@ -171,19 +171,19 @@ void MoveGenerator::generateBishopMoves(Board& board, int curSquare, int curRow,
         for(auto & direction : bishopDirections) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
-            int square = nextRow * board.getWidth() + nextFile;
+            int square = nextRow * WIDTH + nextFile;
 
-            while(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            while(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                   && board.getBoard()[square].getPieceType() == PieceType::EMPTY) {
 
                 moves_.emplace_back(curSquare, square);
                 nextRow = nextRow + direction[0];
                 nextFile = nextFile + direction[1];
-                square = nextRow * board.getWidth() + nextFile;
+                square = nextRow * WIDTH + nextFile;
             }
 
             // captures
-            if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            if(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                && board.getBoard()[square].getColor() != board.getActiveColor()) {
                 moves_.emplace_back(curSquare, square);
             }
@@ -199,8 +199,8 @@ void MoveGenerator::generateKnightMoves(Board& board, int curSquare, int curRow,
         for(auto & direction : knightMoves) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
-            int square = nextRow * board.getWidth() + nextFile;
-            if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            int square = nextRow * WIDTH + nextFile;
+            if(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                && (board.getBoard()[square].getPieceType() == PieceType::EMPTY
                    || board.getBoard()[square].getColor() != board.getActiveColor())) {
                 moves_.emplace_back(curSquare, square);
@@ -223,8 +223,8 @@ void MoveGenerator::generateKingMoves(Board& board, int curSquare, int curRow, i
         for(auto & direction : kingMoves) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
-            int square = nextRow * board.getWidth() + nextFile;
-            if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
+            int square = nextRow * WIDTH + nextFile;
+            if(0 <= nextRow && nextRow < HEIGHT && 0 <= nextFile && nextFile < WIDTH
                && (board.getBoard()[square].getPieceType() == PieceType::EMPTY
                    || board.getBoard()[square].getColor() != board.getActiveColor())) {
                 moves_.emplace_back(curSquare, square);
