@@ -16,25 +16,25 @@ Board &Node::getBoard() {
 
 void Node::generateChildren(int maxDepth) {
 
-    moveGenerator = MoveGenerator(board_);
-    std::vector<Board> boards = moveGenerator.getPossibleBoards(board_);
+    moveGenerator_ = MoveGenerator(board_);
+    std::vector<Board> boards = moveGenerator_.getPossibleBoards(board_);
 
 
     for(auto & newBoard : boards)
-        children.push_back(new Node(newBoard, depth_ + 1));
+        children_.push_back(new Node(newBoard, depth_ + 1));
     if(depth_ < maxDepth) {
-        for(auto & child : children)
+        for(auto & child : children_)
             child->generateChildren(maxDepth);
     }
 
 }
 
 int Node::numberOfChildren() {
-    return children.size();
+    return children_.size();
 }
 
 std::vector<Node*> &Node::getChildren() {
-    return children;
+    return children_;
 }
 
 

@@ -7,33 +7,33 @@
 
 
 enum class Color {
-    black, white, empty
+    BLACK, WHITE, EMPTY
 };
 
 
 enum class PieceType {
-    empty, king, queen, rook, bishop, knight, pawn
+    EMPTY, KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
 };
 
 
 class Piece {
 private:
-    Color color;
-    PieceType pieceType;
+    Color color_;
+    PieceType pieceType_;
 
 public:
     Piece();
-    Piece(Color setColor, PieceType setPieceType);
+    Piece(Color color, PieceType pieceType);
     ~Piece();
-    Color getColor();
-    PieceType getPieceType();
+    Color getColor() const;
+    PieceType getPieceType() const;
 
-    void setPiece(Color& newColor, PieceType& newPieceType);
-    void setPieceType(PieceType& newPieceType);
-    void setColor(Color& newColor);
+    void setPiece(Color& color, PieceType& pieceType);
+    void setPieceType(PieceType& pieceType);
+    void setColor(Color& color);
 
-    char getFenSymbol();
-    void printPiece();
+    char getFenSymbol() const;
+    void printPiece() const;
 };
 
 

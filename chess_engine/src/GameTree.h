@@ -13,8 +13,8 @@
 class Node {
 private:
     Board board_;
-    MoveGenerator moveGenerator;
-    std::vector<Node*> children;
+    MoveGenerator moveGenerator_;
+    std::vector<Node*> children_;
     int depth_;
 public:
     Node();

@@ -9,15 +9,15 @@
 #include "Piece.h"
 #include "Move.h"
 
+const int rookDirections[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+const int bishopDirections[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+const int knightMoves[8][2] = {{2, 1}, {2, -1}, {-2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, -2}, {-1, 2}};
+const int kingMoves[8][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+
 
 class MoveGenerator {
 private:
-    std::vector<Move> moves;
-    Board currentBoard;
-    int rookDirections[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    int bishopDirections[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
-    int knightMoves[8][2] = {{2, 1}, {2, -1}, {-2, -1}, {-2, 1}, {1, 2}, {1, -2}, {-1, -2}, {-1, 2}};
-    int kingMoves[8][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+    std::vector<Move> moves_;
 
 public:
     MoveGenerator();

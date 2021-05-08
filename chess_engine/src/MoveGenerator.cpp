@@ -22,22 +22,22 @@ MoveGenerator::MoveGenerator(Board& board) {
 
             switch (board.getBoard()[curSquare].getPieceType()) {
 
-                case PieceType::pawn:
+                case PieceType::PAWN:
                     generatePawnMoves(board, curSquare, curRow, curFile);
                     break;
-                case PieceType::bishop:
+                case PieceType::BISHOP:
                     generateBishopMoves(board, curSquare, curRow, curFile);
                     break;
-                case PieceType::knight:
+                case PieceType::KNIGHT:
                     generateKnightMoves(board, curSquare, curRow, curFile);
                     break;
-                case PieceType::rook:
+                case PieceType::ROOK:
                     generateRookMoves(board, curSquare, curRow, curFile);
                     break;
-                case PieceType::queen:
+                case PieceType::QUEEN:
                     generateQueenMoves(board, curSquare, curRow, curFile);
                     break;
-                case PieceType::king:
+                case PieceType::KING:
                     generateKingMoves(board, curSquare, curRow, curFile);
                     break;
                 default:
@@ -57,12 +57,12 @@ void MoveGenerator::generatePawnMoves(Board& board, int curSquare, int curRow, i
 
 
 void MoveGenerator::forwardPawnMoves(Board& board, int curSquare, int curRow) {
-    // check color and calculate values
+    // check color_ and calculate values
     int nextSquare;
     int doubleSquare;
     int lastRank;
     int secondRank;
-    if(board.getBoard()[curSquare].getColor() == Color::white) {
+    if(board.getBoard()[curSquare].getColor() == Color::WHITE) {
         nextSquare = curSquare + board.getWidth();
         doubleSquare = nextSquare + board.getWidth();
         lastRank = board.getHeight() - 1;
@@ -74,31 +74,31 @@ void MoveGenerator::forwardPawnMoves(Board& board, int curSquare, int curRow) {
         secondRank = board.getHeight() - 2;
     }
 
-    // generate basic one square forward moves
-    if(board.getBoard()[nextSquare].getPieceType() == PieceType::empty){
-        // pawn promotes when it reaches last rank
+    // generate basic one square forward moves_
+    if(board.getBoard()[nextSquare].getPieceType() == PieceType::EMPTY){
+        // PAWN promotes when it reaches last rank
         if(nextSquare / board.getWidth() == lastRank) {
-            promotion(curSquare, nextSquare, Color::white);
+            promotion(curSquare, nextSquare, Color::WHITE);
         } else {
-            moves.emplace_back(curSquare, nextSquare);
+            moves_.emplace_back(curSquare, nextSquare);
         }
     }
 
-    // generate two squares forward moves
-    if(curRow == secondRank && board.getBoard()[nextSquare].getPieceType() == PieceType::empty
-       && board.getBoard()[doubleSquare].getPieceType() == PieceType::empty) {
+    // generate two squares forward moves_
+    if(curRow == secondRank && board.getBoard()[nextSquare].getPieceType() == PieceType::EMPTY
+       && board.getBoard()[doubleSquare].getPieceType() == PieceType::EMPTY) {
         // en passant square occurs only in this case
-        moves.emplace_back(curSquare, doubleSquare, Piece(), nextSquare);
+        moves_.emplace_back(curSquare, doubleSquare, Piece(), nextSquare);
     }
 }
 
 
 void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int curFile) {
-    // check color and calculate values
+    // check color_ and calculate values
 
     int captureSquares[2][2] = {{0, 1}, {0, -1}};
     int lastRank;
-    if(board.getBoard()[curSquare].getColor() == Color::white) {
+    if(board.getBoard()[curSquare].getColor() == Color::WHITE) {
         captureSquares[0][0] = 1;
         captureSquares[1][0] = 1;
         lastRank = board.getHeight() - 1;
@@ -114,16 +114,16 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
         int square = nextRow * board.getWidth() + nextFile;
 
         if((0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
-            && ((board.getBoard()[square].getColor() != board.getActiveColor() && board.getBoard()[square].getColor() != Color::empty)))) {
+            && ((board.getBoard()[square].getColor() != board.getActiveColor() && board.getBoard()[square].getColor() != Color::EMPTY)))) {
 
             if(nextRow == lastRank) {
                 promotion(curSquare, square, board.getActiveColor());
             } else {
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
             }
         }
         else if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth() && square == board.getEnPassantSquare()) {
-            moves.emplace_back(curSquare, square, Piece(), -1, false, true);
+            moves_.emplace_back(curSquare, square, Piece(), -1, false, true);
         }
     }
 
@@ -131,10 +131,10 @@ void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int cu
 
 
 void MoveGenerator::promotion(int curSquare, int newSquare, Color color) {
-    moves.emplace_back(curSquare, newSquare, Piece(color, PieceType::queen), -1);
-    moves.emplace_back(curSquare, newSquare, Piece(color, PieceType::rook), -1);
-    moves.emplace_back(curSquare, newSquare, Piece(color, PieceType::bishop), -1);
-    moves.emplace_back(curSquare, newSquare, Piece(color, PieceType::knight), -1);
+    moves_.emplace_back(curSquare, newSquare, Piece(color, PieceType::QUEEN), -1);
+    moves_.emplace_back(curSquare, newSquare, Piece(color, PieceType::ROOK), -1);
+    moves_.emplace_back(curSquare, newSquare, Piece(color, PieceType::BISHOP), -1);
+    moves_.emplace_back(curSquare, newSquare, Piece(color, PieceType::KNIGHT), -1);
 }
 
 
@@ -147,9 +147,9 @@ void MoveGenerator::generateRookMoves(Board& board, int curSquare, int curRow, i
             int square = nextRow * board.getWidth() + nextFile;
 
             while(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
-                  && board.getBoard()[square].getPieceType() == PieceType::empty) {
+                  && board.getBoard()[square].getPieceType() == PieceType::EMPTY) {
 
-                moves.emplace_back(curSquare, square, Piece(Color::empty, PieceType::empty), -1);
+                moves_.emplace_back(curSquare, square, Piece(Color::EMPTY, PieceType::EMPTY), -1);
                 nextRow = nextRow + direction[0];
                 nextFile = nextFile + direction[1];
                 square = nextRow * board.getWidth() + nextFile;
@@ -158,7 +158,7 @@ void MoveGenerator::generateRookMoves(Board& board, int curSquare, int curRow, i
             // captures
             if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
                && board.getBoard()[square].getColor() != board.getActiveColor()) {
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
             }
         }
     }
@@ -174,9 +174,9 @@ void MoveGenerator::generateBishopMoves(Board& board, int curSquare, int curRow,
             int square = nextRow * board.getWidth() + nextFile;
 
             while(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
-                  && board.getBoard()[square].getPieceType() == PieceType::empty) {
+                  && board.getBoard()[square].getPieceType() == PieceType::EMPTY) {
 
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
                 nextRow = nextRow + direction[0];
                 nextFile = nextFile + direction[1];
                 square = nextRow * board.getWidth() + nextFile;
@@ -185,7 +185,7 @@ void MoveGenerator::generateBishopMoves(Board& board, int curSquare, int curRow,
             // captures
             if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
                && board.getBoard()[square].getColor() != board.getActiveColor()) {
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
             }
         }
     }
@@ -195,15 +195,15 @@ void MoveGenerator::generateBishopMoves(Board& board, int curSquare, int curRow,
 void MoveGenerator::generateKnightMoves(Board& board, int curSquare, int curRow, int curFile) {
 
     if(board.getBoard()[curSquare].getColor() == board.getActiveColor()) {
-        // iteration over possible knight moves
+        // iteration over possible KNIGHT moves_
         for(auto & direction : knightMoves) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
             int square = nextRow * board.getWidth() + nextFile;
             if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
-               && (board.getBoard()[square].getPieceType() == PieceType::empty
+               && (board.getBoard()[square].getPieceType() == PieceType::EMPTY
                    || board.getBoard()[square].getColor() != board.getActiveColor())) {
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
             }
         }
     }
@@ -219,38 +219,38 @@ void MoveGenerator::generateQueenMoves(Board& board, int curSquare, int curRow, 
 void MoveGenerator::generateKingMoves(Board& board, int curSquare, int curRow, int curFile) {
     if(board.getBoard()[curSquare].getColor() == board.getActiveColor()) {
 
-        // iteration over possible king moves
+        // iteration over possible KING moves_
         for(auto & direction : kingMoves) {
             int nextRow = curRow + direction[0];
             int nextFile = curFile + direction[1];
             int square = nextRow * board.getWidth() + nextFile;
             if(0 <= nextRow && nextRow < board.getHeight() && 0 <= nextFile && nextFile < board.getWidth()
-               && (board.getBoard()[square].getPieceType() == PieceType::empty
+               && (board.getBoard()[square].getPieceType() == PieceType::EMPTY
                    || board.getBoard()[square].getColor() != board.getActiveColor())) {
-                moves.emplace_back(curSquare, square);
+                moves_.emplace_back(curSquare, square);
             }
         }
 
         // castling:
-        if(board.getActiveColor() == Color::white){
-            // white king castling
-            if(board.getCastlingWhiteK() && board.getBoard()[curSquare - 1].getPieceType() == PieceType::empty
-                && board.getBoard()[curSquare - 2].getPieceType() == PieceType::empty) {
-                moves.emplace_back(curSquare, curSquare - 2, Piece(), -1, true);
+        if(board.getActiveColor() == Color::WHITE){
+            // WHITE KING castling
+            if(board.getCastlingWhiteK() && board.getBoard()[curSquare - 1].getPieceType() == PieceType::EMPTY
+                && board.getBoard()[curSquare - 2].getPieceType() == PieceType::EMPTY) {
+                moves_.emplace_back(curSquare, curSquare - 2, Piece(), -1, true);
             }
-            if(board.getCastlingWhiteQ() && board.getBoard()[curSquare + 1].getPieceType() == PieceType::empty
-               && board.getBoard()[curSquare + 2].getPieceType() == PieceType::empty && board.getBoard()[curSquare + 3].getPieceType() == PieceType::empty) {
-                moves.emplace_back(curSquare, curSquare + 2, Piece(), -1, true);
+            if(board.getCastlingWhiteQ() && board.getBoard()[curSquare + 1].getPieceType() == PieceType::EMPTY
+               && board.getBoard()[curSquare + 2].getPieceType() == PieceType::EMPTY && board.getBoard()[curSquare + 3].getPieceType() == PieceType::EMPTY) {
+                moves_.emplace_back(curSquare, curSquare + 2, Piece(), -1, true);
             }
         } else {
-            // black king castling
-            if(board.getCastlingBlackK() && board.getBoard()[curSquare - 1].getPieceType() == PieceType::empty
-               && board.getBoard()[curSquare - 2].getPieceType() == PieceType::empty) {
-                moves.emplace_back(curSquare, curSquare - 2, Piece(), -1, true);
+            // BLACK KING castling
+            if(board.getCastlingBlackK() && board.getBoard()[curSquare - 1].getPieceType() == PieceType::EMPTY
+               && board.getBoard()[curSquare - 2].getPieceType() == PieceType::EMPTY) {
+                moves_.emplace_back(curSquare, curSquare - 2, Piece(), -1, true);
             }
-            if(board.getCastlingBlackQ() && board.getBoard()[curSquare + 1].getPieceType() == PieceType::empty
-               && board.getBoard()[curSquare + 2].getPieceType() == PieceType::empty && board.getBoard()[curSquare + 3].getPieceType() == PieceType::empty) {
-                moves.emplace_back(curSquare, curSquare + 2, Piece(), -1, true);
+            if(board.getCastlingBlackQ() && board.getBoard()[curSquare + 1].getPieceType() == PieceType::EMPTY
+               && board.getBoard()[curSquare + 2].getPieceType() == PieceType::EMPTY && board.getBoard()[curSquare + 3].getPieceType() == PieceType::EMPTY) {
+                moves_.emplace_back(curSquare, curSquare + 2, Piece(), -1, true);
             }
         }
 
@@ -259,13 +259,13 @@ void MoveGenerator::generateKingMoves(Board& board, int curSquare, int curRow, i
 
 
 std::vector<Move> MoveGenerator::getMoves() {
-    return moves;
+    return moves_;
 }
 
 
 bool MoveGenerator::isChecking(Board& board) {
-    for(auto & move : moves) {
-        if(board.getBoard()[move.getTo()].getPieceType() == PieceType::king)
+    for(auto & move : moves_) {
+        if(board.getBoard()[move.getTo()].getPieceType() == PieceType::KING)
             return true;
     }
 
@@ -275,16 +275,16 @@ bool MoveGenerator::isChecking(Board& board) {
 
 Board MoveGenerator::MakeAMove(Board& board, Move move) {
     Board newBoard = board;
-    if(newBoard.getBoard()[move.getFrom()].getPieceType() == PieceType::king) {
-        if(newBoard.getActiveColor() == Color::white) {
+    if(newBoard.getBoard()[move.getFrom()].getPieceType() == PieceType::KING) {
+        if(newBoard.getActiveColor() == Color::WHITE) {
             newBoard.takeAwayCastlingWhiteK();
             newBoard.takeAwayCastlingWhiteQ();
         } else {
             newBoard.takeAwayCastlingBlackK();
             newBoard.takeAwayCastlingBlackQ();
         }
-    } else if(newBoard.getBoard()[move.getFrom()].getPieceType() == PieceType::rook) {
-        if(newBoard.getActiveColor() == Color::white) {
+    } else if(newBoard.getBoard()[move.getFrom()].getPieceType() == PieceType::ROOK) {
+        if(newBoard.getActiveColor() == Color::WHITE) {
             // TODO: do it smarter
             if(4 < move.getFrom())
                 newBoard.takeAwayCastlingWhiteQ();
@@ -300,7 +300,7 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
     }
     newBoard.changeActiveColor();
     newBoard.setEnPassantSquare(-1);
-    if(move.getPromoteTo().getPieceType() != PieceType::empty) {
+    if(move.getPromoteTo().getPieceType() != PieceType::EMPTY) {
         newBoard.setPiece(move.getTo(), move.getPromoteTo());
         newBoard.setPiece(move.getFrom(), Piece());
     } else if(move.getEnPassantSquare() != -1) {
@@ -309,7 +309,7 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
         newBoard.setPiece(move.getFrom(), Piece());
     } else if(move.isItEnPassant()) {
         newBoard.setPiece(move.getTo(), newBoard.getBoard()[move.getFrom()]);
-        if(newBoard.getBoard()[move.getFrom()].getColor() == Color::white)
+        if(newBoard.getBoard()[move.getFrom()].getColor() == Color::WHITE)
             newBoard.setPiece(move.getTo() - 8, Piece());
         else
             newBoard.setPiece(move.getTo() + 8, Piece());
@@ -332,7 +332,7 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
 
 Board MoveGenerator::MakeCastlingMove(Board& board, Move move) {
     Board newBoard = board;
-    if(newBoard.getActiveColor() == Color::white) {
+    if(newBoard.getActiveColor() == Color::WHITE) {
         newBoard.takeAwayCastlingWhiteK();
         newBoard.takeAwayCastlingWhiteQ();
     } else {
@@ -366,7 +366,7 @@ bool MoveGenerator::isMoveLegal(Board board) {
 
 std::vector<Board> MoveGenerator::getPossibleBoards(Board& board) {
     std::vector<Board> boards;
-    for(auto & move : moves) {
+    for(auto & move : moves_) {
         Board temp = MakeAMove(board, move);
         if(isMoveLegal(temp)) {
             if(move.isItCastling()) {
