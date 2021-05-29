@@ -94,11 +94,14 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
         float beta = INFINITY;
         for(int i = 0; i < root->getChildren().size(); ++i) {
             float eval = alphaBeta(root->getChildren()[i], depth - 1, alpha, beta, false);
-            if(eval >= maxEval) {
+            if(eval > maxEval) {
                 best_move = i;
                 maxEval = eval;
             }
-
+            alpha = std::max(maxEval, beta);
+            std::cout << alpha << " " << beta << " " << eval << " " << best_move << '\n';
+            if(alpha <= beta)
+                break;
         }
         ret = root->getChildren()[best_move]->getBoard().getFenString();
     } else {
