@@ -4,7 +4,6 @@
 
 #include <iterator>
 #include <sstream>
-#include <numeric>
 #include <algorithm>
 
 #include "Board.h"
@@ -12,28 +11,24 @@
 
 
 Board::Board() {
-    width = 8;
-    height = 8;
-    board.assign(width * height, Piece());
+    board_.assign(WIDTH * HEIGHT, Piece());
 
-    activeColor = Color::white;
+    activeColor_ = Color::WHITE;
 
-    castlingWhiteK = true;
-    castlingWhiteQ = true;
-    castlingBlackK = true;
-    castlingBlackQ = true;
+    castlingWhiteK_ = true;
+    castlingWhiteQ_ = true;
+    castlingBlackK_ = true;
+    castlingBlackQ_ = true;
 
-    enPassantSquare = -1;
-    halfmoveClock = 0;
-    fullmoveNumber = 1;
+    enPassantSquare_ = -1;
+    halfmoveClock_ = 0;
+    fullmoveNumber_ = 1;
+    score_ = 0;
 }
 
 
 // works for valid FEN
 Board::Board(const std::string& fen, std::string prevMove) {
-    width = 8;
-    height = 8;
-
      // split FEN
     std::istringstream iss(fen);
     std::vector<std::string> fenSplit(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
@@ -42,35 +37,35 @@ Board::Board(const std::string& fen, std::string prevMove) {
     for (auto c = fenSplit[0].crbegin() ; c != fenSplit[0].crend(); ++c) {
         switch (*c) {
             case 'k':
-                board.emplace_back(Color::black, PieceType::king); break;
+                board_.emplace_back(Color::BLACK, PieceType::KING); break;
             case 'q':
-                board.emplace_back(Color::black, PieceType::queen); break;
+                board_.emplace_back(Color::BLACK, PieceType::QUEEN); break;
             case 'r':
-                board.emplace_back(Color::black, PieceType::rook); break;
+                board_.emplace_back(Color::BLACK, PieceType::ROOK); break;
             case 'b':
-                board.emplace_back(Color::black, PieceType::bishop); break;
+                board_.emplace_back(Color::BLACK, PieceType::BISHOP); break;
             case 'n':
-                board.emplace_back(Color::black, PieceType::knight); break;
+                board_.emplace_back(Color::BLACK, PieceType::KNIGHT); break;
             case 'p':
-                board.emplace_back(Color::black, PieceType::pawn); break;
+                board_.emplace_back(Color::BLACK, PieceType::PAWN); break;
             case 'K':
-                board.emplace_back(Color::white, PieceType::king); break;
+                board_.emplace_back(Color::WHITE, PieceType::KING); break;
             case 'Q':
-                board.emplace_back(Color::white, PieceType::queen); break;
+                board_.emplace_back(Color::WHITE, PieceType::QUEEN); break;
             case 'R':
-                board.emplace_back(Color::white, PieceType::rook); break;
+                board_.emplace_back(Color::WHITE, PieceType::ROOK); break;
             case 'B':
-                board.emplace_back(Color::white, PieceType::bishop); break;
+                board_.emplace_back(Color::WHITE, PieceType::BISHOP); break;
             case 'N':
-                board.emplace_back(Color::white, PieceType::knight); break;
+                board_.emplace_back(Color::WHITE, PieceType::KNIGHT); break;
             case 'P':
-                board.emplace_back(Color::white, PieceType::pawn); break;
+                board_.emplace_back(Color::WHITE, PieceType::PAWN); break;
             case '/':
                 break;
             default:
                 if(isdigit(*c)) {
                     for(int i = 0; i < (int)*c - '0'; ++i) {
-                        board.emplace_back(Color::empty, PieceType::empty);
+                        board_.emplace_back(Color::EMPTY, PieceType::EMPTY);
                     }
                 } else {
                     std::cout << "Invalid FEN";
@@ -79,26 +74,26 @@ Board::Board(const std::string& fen, std::string prevMove) {
     }
 
     if(fenSplit[1] == "w") {
-        activeColor = Color::white;
+        activeColor_ = Color::WHITE;
     } else if(fenSplit[1] == "b") {
-        activeColor = Color::black;
+        activeColor_ = Color::BLACK;
     }
 
-    castlingWhiteK = false;
-    castlingWhiteQ = false;
-    castlingBlackK = false;
-    castlingBlackQ = false;
+    castlingWhiteK_ = false;
+    castlingWhiteQ_ = false;
+    castlingBlackK_ = false;
+    castlingBlackQ_ = false;
 
     for (char const &c: fenSplit[2]) {
         switch (c) {
             case 'k':
-                castlingBlackK = true; break;
+                castlingBlackK_ = true; break;
             case 'q':
-                castlingBlackQ = true; break;
+                castlingBlackQ_ = true; break;
             case 'K':
-                castlingWhiteK = true; break;
+                castlingWhiteK_ = true; break;
             case 'Q':
-                castlingWhiteQ = true; break;
+                castlingWhiteQ_ = true; break;
             case '-':
                 break;
             default:
@@ -107,14 +102,15 @@ Board::Board(const std::string& fen, std::string prevMove) {
     }
 
     if(fenSplit[3] == "-") {
-        enPassantSquare = -1;
+        enPassantSquare_ = -1;
     } else {
-        enPassantSquare = 8 * ((int)fenSplit[3][1] - '1') + 'h' - (int)fenSplit[3][0];
+        enPassantSquare_ = WIDTH * ((int)fenSplit[3][1] - '1') + 'h' - (int)fenSplit[3][0];
     }
 
-    halfmoveClock = std::stoi(fenSplit[4]);
-    fullmoveNumber = std::stoi(fenSplit[5]);
-    previousMove = prevMove;
+    halfmoveClock_ = std::stoi(fenSplit[4]);
+    fullmoveNumber_ = std::stoi(fenSplit[5]);
+    previousMove_ = prevMove;
+    score_ = 0;
 }
 
 
@@ -122,105 +118,96 @@ Board::~Board() = default;
 
 
 std::vector<Piece>& Board::getBoard() {
-    return board;
+    return board_;
 }
 
 
 void Board::setPiece(int square, const Piece& piece) {
-    if(0 <= square && square < (int)board.size())
-        board[square] = piece;
+    if(0 <= square && square < (int)board_.size())
+        board_[square] = piece;
 }
 
-
-const int& Board::getWidth() const {
-    return width;
-}
-
-
-const int& Board::getHeight() const {
-    return height;
-}
 
 
 Color& Board::getActiveColor() {
-    return activeColor;
+    return activeColor_;
 }
 
 
 void Board::changeActiveColor() {
-    if(activeColor == Color::white) {
-        activeColor = Color::black;
+    if(activeColor_ == Color::WHITE) {
+        activeColor_ = Color::BLACK;
     } else {
-        activeColor = Color::white;
+        activeColor_ = Color::WHITE;
     }
 }
 
 
 bool Board::getCastlingWhiteK() const {
-    return castlingWhiteK;
+    return castlingWhiteK_;
 }
 
 bool Board::getCastlingWhiteQ() const {
-    return castlingWhiteQ;
+    return castlingWhiteQ_;
 }
 
 bool Board::getCastlingBlackK() const {
-    return castlingBlackK;
+    return castlingBlackK_;
 }
 
 bool Board::getCastlingBlackQ() const {
-    return castlingBlackQ;
+    return castlingBlackQ_;
 }
 
 
 void Board::takeAwayCastlingWhiteK() {
-    castlingWhiteK = false;
+    castlingWhiteK_ = false;
 }
 
 void Board::takeAwayCastlingWhiteQ() {
-    castlingWhiteQ = false;
+    castlingWhiteQ_ = false;
 }
 
 void Board::takeAwayCastlingBlackK() {
-    castlingBlackK = false;
+    castlingBlackK_ = false;
 }
 
 void Board::takeAwayCastlingBlackQ() {
-    castlingBlackQ = false;
+    castlingBlackQ_ = false;
 }
 
 
 int Board::getEnPassantSquare() const {
-    return enPassantSquare;
+    return enPassantSquare_;
 }
 
 
 void Board::setEnPassantSquare(int square) {
-    enPassantSquare = square;
+    enPassantSquare_ = square;
 }
 
 
 void Board::printBoard() {
-    for(int i = width * height - 1; i >= 0; --i){
-        board[i].printPiece();
-        if(i % width == 0) {
+    for(int i = WIDTH * HEIGHT - 1; i >= 0; --i){
+        board_[i].printPiece();
+        if(i % WIDTH == 0) {
             std::cout << "\n";
         }
     }
 }
 
 void Board::setPreviousMove(std::string prevMove) {
-    previousMove = prevMove;
+    previousMove_ = prevMove;
 }
 
 std::string Board::getPreviousMove() {
-    return previousMove;
+    return previousMove_;
 }
 
 std::string Board::boardToFen() {
     std::string fen_board = "";
     int empty = 0, position = 0;
-    for (auto & piece: board) {
+    for (auto & piece: board_) {
         ++position;
         const char fenSymbol = piece.getFenSymbol();
         if (fenSymbol != '0') {
@@ -233,7 +220,7 @@ std::string Board::boardToFen() {
         else {
             ++empty;
         }
-        if (position % width == 0) {
+        if (position % WIDTH == 0) {
             if (empty != 0) {
                 fen_board += ('0' + empty);
                 empty = 0;
@@ -247,25 +234,25 @@ std::string Board::boardToFen() {
 }
 
 std::string Board::colorToFen() {
-    return activeColor == Color::white ? "w" : "b";
+    return activeColor_ == Color::WHITE ? "w" : "b";
 }
 
 std::string Board::castlingToFen() {
-    std::string castling = castlingWhiteK ? "K" : "-";
-    castling += castlingWhiteQ ? 'Q' : '-';
-    castling += castlingBlackK ? 'k' : '-';
-    castling += castlingBlackQ ? 'q' : '-';
+    std::string castling = castlingWhiteK_ ? "K" : "-";
+    castling += castlingWhiteQ_ ? 'Q' : '-';
+    castling += castlingBlackK_ ? 'k' : '-';
+    castling += castlingBlackQ_ ? 'q' : '-';
     return castling;
 }
 
 std::string Board::enPassantToFen() {
-    if (enPassantSquare == -1)
+    if (enPassantSquare_ == -1)
         return "-";
     std::string ret = "";
     std::string file = "hgfedcba";
     std::string row = "12345678";
-    ret += file[enPassantSquare % 8];
-    ret += row[enPassantSquare / 8];
+    ret += file[enPassantSquare_ % 8];
+    ret += row[enPassantSquare_ / 8];
     return ret;
 }
 
@@ -280,6 +267,59 @@ std::string Board::fullMoveToFen() {
 std::string Board::getFenString() {
     return boardToFen() + " " + colorToFen() + " " + castlingToFen() + " " +
         enPassantToFen() + " " + halfMoveToFen() + " " + fullMoveToFen();
+}
+
+float Board::getScore() const {
+    return score_;
+}
+
+float Board::eval() {
+    for(auto &piece : board_) {
+        switch (piece.getPieceType()) {
+            case PieceType::EMPTY:
+                break;
+            case PieceType::KING:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += KING_VALUE;
+                else
+                    score_ -= KING_VALUE;
+                break;
+            case PieceType::QUEEN:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += QUEEN_VALUE;
+                else
+                    score_ -= QUEEN_VALUE;
+                break;
+            case PieceType::ROOK:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += ROOK_VALUE;
+                else
+                    score_ -= ROOK_VALUE;
+                break;
+            case PieceType::BISHOP:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += BISHOP_VALUE;
+                else
+                    score_ -= BISHOP_VALUE;
+                break;
+            case PieceType::KNIGHT:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += KNIGHT_VALUE;
+                else
+                    score_ -= KNIGHT_VALUE;
+                break;
+            case PieceType::PAWN:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += PAWN_VALUE;
+                else
+                    score_ -= PAWN_VALUE;
+                break;
+            default:
+                std::cout << "Invalid piece";
+        }
+    }
+
+    return score_;
 }
 
 

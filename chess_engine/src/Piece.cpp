@@ -10,80 +10,80 @@ using namespace std;
 
 
 Piece::Piece() {
-    pieceType = PieceType::empty;
-    color = Color::empty;
+    pieceType_ = PieceType::EMPTY;
+    color_ = Color::EMPTY;
 }
 
 
-Piece::Piece(Color setColor, PieceType setPieceType) {
-    color = setColor;
-    pieceType = setPieceType;
+Piece::Piece(Color color, PieceType pieceType) {
+    color_ = color;
+    pieceType_ = pieceType;
 }
 
 
 Piece::~Piece() = default;
 
 
-Color Piece::getColor() {
-    return color;
+Color Piece::getColor() const {
+    return color_;
 }
 
 
-PieceType Piece::getPieceType() {
-    return pieceType;
+PieceType Piece::getPieceType() const {
+    return pieceType_;
 }
 
 
-void Piece::setPiece(Color& newColor, PieceType& newPieceType) {
-    color = newColor;
-    pieceType = newPieceType;
+void Piece::setPiece(Color& color, PieceType& pieceType) {
+    color_ = color;
+    pieceType_ = pieceType;
 }
 
 
-void Piece::setPieceType(PieceType& newPieceType) {
-    pieceType = newPieceType;
+void Piece::setPieceType(PieceType& pieceType) {
+    pieceType_ = pieceType;
 }
 
 
-void Piece::setColor(Color& newColor) {
-    color = newColor;
+void Piece::setColor(Color& color) {
+    color_ = color;
 }
 
 
 std::ostream& operator << (std::ostream& os, const Color& c) {
-    const string name[] = {"black", "white", "empty"};
+    const string name[] = {"BLACK", "WHITE", "EMPTY"};
 
     return os << name[static_cast<std::underlying_type<Color>::type>(c)];
 }
 
 
 std::ostream& operator << (std::ostream& os, const PieceType& p) {
-    const string name[] = {"empty", "king", "queen", "rook", "bishop", "knight", "pawn"};
+    const string name[] = {"EMPTY", "KING", "QUEEN", "ROOK", "BISHOP", "KNIGHT", "PAWN"};
 
     return os << name[static_cast<std::underlying_type<PieceType>::type>(p)];
 }
 
 
-char Piece::getFenSymbol() {
-    switch(pieceType) {
-        case PieceType::king:
-            return color == Color::white ? 'K': 'k';
-        case PieceType::queen:
-            return color == Color::white ? 'Q' : 'q';
-        case PieceType::rook:
-            return color == Color::white ? 'R': 'r';
-        case PieceType::bishop:
-            return color == Color::white ? 'B': 'b';
-        case PieceType::knight:
-            return color == Color::white ? 'N': 'n';
-        case PieceType::pawn:
-            return color == Color::white ? 'P': 'p' ;
+char Piece::getFenSymbol() const {
+    switch(pieceType_) {
+        case PieceType::KING:
+            return color_ == Color::WHITE ? 'K' : 'k';
+        case PieceType::QUEEN:
+            return color_ == Color::WHITE ? 'Q' : 'q';
+        case PieceType::ROOK:
+            return color_ == Color::WHITE ? 'R' : 'r';
+        case PieceType::BISHOP:
+            return color_ == Color::WHITE ? 'B' : 'b';
+        case PieceType::KNIGHT:
+            return color_ == Color::WHITE ? 'N' : 'n';
+        case PieceType::PAWN:
+            return color_ == Color::WHITE ? 'P' : 'p' ;
         default:
             return '0';
     }
 }
 
 
-void Piece::printPiece() {
-    cout << "(" << color << "," << pieceType << ")";
+void Piece::printPiece() const {
+    cout << "(" << color_ << "," << pieceType_ << ")";
 }

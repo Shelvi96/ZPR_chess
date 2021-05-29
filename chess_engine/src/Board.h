@@ -7,24 +7,32 @@
 
 #include "Piece.h"
 
+const int WIDTH = 8;
+const int HEIGHT = 8;
+
+const int KING_VALUE = 10000;
+const int QUEEN_VALUE = 9;
+const int ROOK_VALUE = 5;
+const int BISHOP_VALUE = 3;
+const int KNIGHT_VALUE = 3;
+const int PAWN_VALUE = 1;
 
 class Board {
 private:
-    std::vector<Piece> board;
-    int height;
-    int width;
+    std::vector<Piece> board_;
 
-    Color activeColor;
-    bool castlingWhiteK;
-    bool castlingWhiteQ;
-    bool castlingBlackK;
-    bool castlingBlackQ;
+    Color activeColor_;
+    bool castlingWhiteK_;
+    bool castlingWhiteQ_;
+    bool castlingBlackK_;
+    bool castlingBlackQ_;
 
-    int enPassantSquare;
-    int halfmoveClock;
-    int fullmoveNumber;
+    int enPassantSquare_;
+    int halfmoveClock_;
+    int fullmoveNumber_;
 
-    std::string previousMove;
+    std::string previousMove_;
+    float score_;
 
     std::string boardToFen();
     std::string colorToFen();
@@ -32,6 +40,7 @@ private:
     std::string enPassantToFen();
     std::string halfMoveToFen();
     std::string fullMoveToFen();
+
 public:
     Board();
     explicit Board(const std::string& fen, std::string prevMove = "00,00");
@@ -39,9 +48,6 @@ public:
 
     std::vector<Piece>& getBoard();
     void setPiece(int square, const Piece& piece);
-
-    const int& getWidth() const;
-    const int& getHeight() const;
 
     Color& getActiveColor();
     void changeActiveColor();
@@ -61,6 +67,9 @@ public:
     void setPreviousMove(std::string prevMove);
     std::string getPreviousMove();
     std::string getFenString();
+
+    float getScore() const;
+    float eval();
 
     void printBoard();
 };
