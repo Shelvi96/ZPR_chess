@@ -23,6 +23,7 @@ Board::Board() {
     enPassantSquare_ = -1;
     halfmoveClock_ = 0;
     fullmoveNumber_ = 1;
+    score_ = 0;
 }
 
 
@@ -109,6 +110,7 @@ Board::Board(const std::string& fen, std::string prevMove) {
     halfmoveClock_ = std::stoi(fenSplit[4]);
     fullmoveNumber_ = std::stoi(fenSplit[5]);
     previousMove_ = prevMove;
+    score_ = 0;
 }
 
 
@@ -265,6 +267,59 @@ std::string Board::fullMoveToFen() {
 std::string Board::getFenString() {
     return boardToFen() + " " + colorToFen() + " " + castlingToFen() + " " +
         enPassantToFen() + " " + halfMoveToFen() + " " + fullMoveToFen();
+}
+
+float Board::getScore() const {
+    return score_;
+}
+
+float Board::eval() {
+    for(auto &piece : board_) {
+        switch (piece.getPieceType()) {
+            case PieceType::EMPTY:
+                break;
+            case PieceType::KING:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += KING_VALUE;
+                else
+                    score_ -= KING_VALUE;
+                break;
+            case PieceType::QUEEN:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += QUEEN_VALUE;
+                else
+                    score_ -= QUEEN_VALUE;
+                break;
+            case PieceType::ROOK:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += ROOK_VALUE;
+                else
+                    score_ -= ROOK_VALUE;
+                break;
+            case PieceType::BISHOP:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += BISHOP_VALUE;
+                else
+                    score_ -= BISHOP_VALUE;
+                break;
+            case PieceType::KNIGHT:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += KNIGHT_VALUE;
+                else
+                    score_ -= KNIGHT_VALUE;
+                break;
+            case PieceType::PAWN:
+                if(piece.getColor() == Color::WHITE)
+                    score_ += PAWN_VALUE;
+                else
+                    score_ -= PAWN_VALUE;
+                break;
+            default:
+                std::cout << "Invalid piece";
+        }
+    }
+
+    return score_;
 }
 
 

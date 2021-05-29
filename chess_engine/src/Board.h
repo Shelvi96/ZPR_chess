@@ -10,6 +10,12 @@
 const int WIDTH = 8;
 const int HEIGHT = 8;
 
+const int KING_VALUE = 10000;
+const int QUEEN_VALUE = 9;
+const int ROOK_VALUE = 5;
+const int BISHOP_VALUE = 3;
+const int KNIGHT_VALUE = 3;
+const int PAWN_VALUE = 1;
 
 class Board {
 private:
@@ -26,6 +32,7 @@ private:
     int fullmoveNumber_;
 
     std::string previousMove_;
+    float score_;
 
     std::string boardToFen();
     std::string colorToFen();
@@ -60,6 +67,9 @@ public:
     void setPreviousMove(std::string prevMove);
     std::string getPreviousMove();
     std::string getFenString();
+
+    float getScore() const;
+    float eval();
 
     void printBoard();
 };
