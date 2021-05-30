@@ -2,6 +2,7 @@
 #include "Board.h"
 #include "Piece.h"
 #include "MoveGenerator.h"
+#include "GameTree.h"
 
 std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, int j_new) {
     Board b = Board(fenString);
@@ -16,12 +17,15 @@ std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, i
             if(m.isMoveLegal(temp)) {
                 ++legalMoves;
                 if(move.isItCastling()) {
-                    Board temp = m.MakeCastlingMove(b, move);
-                    return temp.getFenString();
+                    temp = m.MakeCastlingMove(b, move);
+//                    return temp.getFenString();
                 } else {
-                    return temp.getFenString();
+//                    return temp.getFenString();
                 }
             }
+            GameTree tree(temp);
+            return tree.getBestMove(5, false);
+
         }
     }
     return "";

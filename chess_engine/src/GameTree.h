@@ -10,6 +10,8 @@
 #include "MoveGenerator.h"
 
 
+const float INFINITY = 1e10;
+
 class Node {
 private:
     Board board_;
@@ -23,6 +25,8 @@ public:
     void generateChildren(int maxDepth);
     int numberOfChildren();
     std::vector<Node*> &getChildren();
+    void generateMoves();
+    MoveGenerator getMoveGenerator();
 };
 
 
@@ -37,6 +41,8 @@ public:
     void generateTree(int depth);
     void deleteTree(Node* node);
     int countPossibleBoards(Node* node, int level);
+    std::string getBestMove(int depth, bool maximizingPlayer);
+    float alphaBeta(Node *node, int depth, float alpha, float beta, bool maximizingPlayer);
 };
 
 
