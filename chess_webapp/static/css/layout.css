@@ -103,6 +103,25 @@ footer {
     height: 50px;
     padding: 10px;
 }
-footer p {
+
+.footer_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.footer_left {
+    width: 40%;
+}
+.footer_left a {
+    color: white;
+    line-height: 50px;
+    margin: 0 20px
+}
+
+.footer_right {
+    width: 40%;
+}
+.footer_right p {
     float: right;
+    line-height: 20px;
 }

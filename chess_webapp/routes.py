@@ -1,7 +1,9 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 from chess_webapp import app
 import chessengine
 
+import webbrowser
+import os
 
 @app.route('/')
 @app.route('/home')
@@ -19,6 +21,13 @@ def check_fen(fen_string, i_old, j_old, i_new, j_new):
 @app.route("/no_access")
 def no_access():
     return render_template('no_access.html', title='No access')
+
+
+@app.route("/doc")
+def doc():
+    filename = 'chess_webapp/html/index.html'
+    webbrowser.open('file://' + os.path.realpath(filename))
+    return redirect(url_for('home'))
 
 
 @app.route("/app")

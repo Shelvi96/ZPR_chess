@@ -186,16 +186,6 @@ void Board::setEnPassantSquare(int square) {
     enPassantSquare_ = square;
 }
 
-
-void Board::printBoard() {
-    for(int i = WIDTH * HEIGHT - 1; i >= 0; --i){
-        board_[i].printPiece();
-        if(i % WIDTH == 0) {
-            std::cout << "\n";
-        }
-    }
-}
-
 void Board::setPreviousMove(std::string prevMove) {
     previousMove_ = prevMove;
 }
@@ -339,14 +329,3 @@ float Board::eval() {
     }
     return score_;
 }
-
-
-template<typename A>
-void printVector(std::vector<A> &T) {
-    std::cout << "[";
-    for (auto i = T.begin(); i != T.end(); ++i)
-        std::cout << *i << ',';
-    std::cout << "]\n";
-}
-
-

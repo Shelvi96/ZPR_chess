@@ -22,7 +22,6 @@ std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, i
             }
             GameTree tree(temp);
             return tree.getBestMove(5, false);
-
         }
     }
     return "";

@@ -95,7 +95,6 @@ void MoveGenerator::forwardPawnMoves(Board& board, int curSquare, int curRow) {
 
 void MoveGenerator::pawnCaptures(Board& board, int curSquare, int curRow, int curFile) {
     // check color_ and calculate values
-
     int captureSquares[2][2] = {{0, 1}, {0, -1}};
     int lastRank;
     if(board.getBoard()[curSquare].getColor() == Color::WHITE) {
@@ -285,7 +284,6 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
         }
     } else if(newBoard.getBoard()[move.getFrom()].getPieceType() == PieceType::ROOK) {
         if(newBoard.getActiveColor() == Color::WHITE) {
-            // TODO: do it smarter
             if(4 < move.getFrom())
                 newBoard.takeAwayCastlingWhiteQ();
             else
@@ -325,7 +323,7 @@ Board MoveGenerator::MakeAMove(Board& board, Move move) {
         newBoard.setPiece(move.getFrom(), Piece());
     }
 
-    newBoard.setPreviousMove(move.printMove());
+    newBoard.setPreviousMove(move.toString());
     return newBoard;
 }
 
@@ -350,7 +348,7 @@ Board MoveGenerator::MakeCastlingMove(Board& board, Move move) {
     newBoard.setPiece(move.getTo(), newBoard.getBoard()[move.getFrom()]);
     newBoard.setPiece(move.getFrom(), Piece());
     newBoard.setEnPassantSquare(-1);
-    newBoard.setPreviousMove(move.printMove());
+    newBoard.setPreviousMove(move.toString());
     return newBoard;
 }
 
@@ -363,6 +361,7 @@ bool MoveGenerator::isMoveLegal(Board board) {
 
     return true;
 }
+
 
 std::vector<Board> MoveGenerator::getPossibleBoards(Board& board) {
     std::vector<Board> boards;
@@ -379,5 +378,3 @@ std::vector<Board> MoveGenerator::getPossibleBoards(Board& board) {
     }
     return boards;
 }
-
-

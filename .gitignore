@@ -164,6 +164,13 @@ fabric.properties
 **/compile_commands.json
 
 
+# doxygen
+**/CMakeDoxyfile.in
+**/CMakeDoxygenDefaults.cmake
+**/html
+**/html/*
+
+
 
 # VSCode
 .vscode

@@ -10,8 +10,8 @@
 Move::Move() = default;
 
 
-Move::Move(int currentSquare, int targetSquare, const Piece &newPiece, int enPassant, bool castling, bool enPassant_)
-            : from(currentSquare), to(targetSquare), promoteTo(newPiece), enPassantSquare(enPassant), castling(castling), enPassant(enPassant_){}
+Move::Move(int currentSquare, int targetSquare, const Piece &newPiece, int enPassantSquare, bool castling, bool isEnPassant)
+            : from(currentSquare), to(targetSquare), promoteTo(newPiece), enPassantSquare(enPassantSquare), castling(castling), enPassant(isEnPassant){}
 
 
 Move::~Move() = default;
@@ -41,7 +41,7 @@ bool Move::isItEnPassant() const {
     return enPassant;
 }
 
-std::string Move::printMove() {
+std::string Move::toString() {
     std::string file = "hgfedcba";
     std::string row = "12345678";
     std::string ret = "";

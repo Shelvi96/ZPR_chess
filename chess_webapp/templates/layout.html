@@ -37,7 +37,14 @@
             {% block content %}{% endblock %}
         </main>
         <footer class="fontConsole font12">
-            <p>Copyright 2021 Blah Blah Blah</p>
+            <div class="footer_content">
+                <div class="footer_left">
+                    <a href="{{ url_for('doc') }}">Documentation</a>
+                </div>
+                <div class="footer_right">
+                    <p>Copyright 2021 Blah Blah Blah</p>
+                </div>
+            </div>
         </footer>
     </div>
 </body>

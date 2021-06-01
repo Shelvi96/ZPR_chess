@@ -82,8 +82,3 @@ char Piece::getFenSymbol() const {
             return '0';
     }
 }
-
-
-void Piece::printPiece() const {
-    cout << "(" << color_ << "," << pieceType_ << ")";
-}

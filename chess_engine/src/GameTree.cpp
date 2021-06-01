@@ -10,10 +10,12 @@ Node::Node(const Board& board, int depth) {
 }
 
 
+Node::~Node() = default;
+
+
 Board &Node::getBoard() {
     return board_;
 }
-
 
 
 void Node::generateChildren(int maxDepth) {
@@ -31,17 +33,21 @@ void Node::generateChildren(int maxDepth) {
 
 }
 
+
 int Node::numberOfChildren() {
     return children_.size();
 }
+
 
 std::vector<Node*> &Node::getChildren() {
     return children_;
 }
 
+
 void Node::generateMoves() {
     moveGenerator_ = MoveGenerator(board_);
 }
+
 
 MoveGenerator Node::getMoveGenerator() {
     return moveGenerator_;
@@ -52,15 +58,22 @@ Node* GameTree::getRoot() {
     return root;
 }
 
+
 GameTree::GameTree() = default;
+
 
 GameTree::GameTree(Board board) {
     root = new Node(board, 0);
 }
 
+
+GameTree::~GameTree() = default;
+
+
 void GameTree::generateTree(int depth) {
     root->generateChildren(depth);
 }
+
 
 void GameTree::deleteTree(Node *node) {
     for(auto &child : node->getChildren()){
@@ -68,6 +81,7 @@ void GameTree::deleteTree(Node *node) {
     }
     delete node;
 }
+
 
 int GameTree::countPossibleBoards(Node *node, int level) {
     if(node == nullptr) {
@@ -83,6 +97,7 @@ int GameTree::countPossibleBoards(Node *node, int level) {
         return counter;
     }
 }
+
 
 std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
     generateTree(1);
@@ -123,8 +138,6 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
         }
         ret = root->getChildren()[best_move]->getBoard().getFenString();
     }
-
-
 
     deleteTree(root);
     return ret;
@@ -178,4 +191,3 @@ float GameTree::alphaBeta(Node *node, int depth, float alpha, float beta, bool m
         return minEval;
     }
 }
-
