@@ -321,14 +321,3 @@ float Board::eval() {
 
     return score_;
 }
-
-
-template<typename A>
-void printVector(std::vector<A> &T) {
-    std::cout << "[";
-    for (auto i = T.begin(); i != T.end(); ++i)
-        std::cout << *i << ',';
-    std::cout << "]\n";
-}
-
-

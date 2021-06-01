@@ -1,4 +1,9 @@
-
+/** @file
+ * @brief Interface to handle move generation and validation.
+ *
+ * @author Jakub Jurasz, Konrad Owsikowski
+ * @date 01.04.2021
+ */
 #ifndef MOVEGENERATOR_H
 #define MOVEGENERATOR_H
 

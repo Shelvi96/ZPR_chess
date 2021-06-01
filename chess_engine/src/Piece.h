@@ -1,3 +1,9 @@
+/** @file
+ * @brief Interface to represent a chess piece.
+ *
+ * @author Jakub Jurasz, Konrad Owsikowski
+ * @date 25.03.2021
+ */
 #ifndef PIECE_H
 #define PIECE_H
 

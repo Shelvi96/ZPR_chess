@@ -1,3 +1,9 @@
+/** @file
+ * @brief Interface to handle making a move.
+ *
+ * @author Jakub Jurasz, Konrad Owsikowski
+ * @date 01.04.2021
+ */
 #ifndef MOVE_H
 #define MOVE_H
 

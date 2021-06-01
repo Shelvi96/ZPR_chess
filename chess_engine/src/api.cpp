@@ -16,16 +16,11 @@ std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, i
             Board temp = m.MakeAMove(b, move);
             if(m.isMoveLegal(temp)) {
                 ++legalMoves;
-                if(move.isItCastling()) {
+                if(move.isItCastling())
                     temp = m.MakeCastlingMove(b, move);
-//                    return temp.getFenString();
-                } else {
-//                    return temp.getFenString();
-                }
             }
             GameTree tree(temp);
             return tree.getBestMove(5, false);
-
         }
     }
     return "";

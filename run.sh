@@ -20,6 +20,7 @@ then
   echo "Downloading Flask..."
   pip3 install flask --target=./chess_webapp/dependencies/flask
 fi
+
 DEPENDENCIES_PATH="./chess_webapp/lib:./chess_webapp/dependencies/flask"
 
 PYTHONPATH=$DEPENDENCIES_PATH python3 run.py

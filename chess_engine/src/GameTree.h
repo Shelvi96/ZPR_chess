@@ -1,3 +1,9 @@
+/** @file
+ * @brief Interface to handle game tree building and decision making.
+ *
+ * @author Jakub Jurasz, Konrad Owsikowski
+ * @date 20.04.2021
+ */
 #ifndef GAMETREE_H
 #define GAMETREE_H
 
