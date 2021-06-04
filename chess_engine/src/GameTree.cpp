@@ -92,7 +92,7 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
         int best_move = 0;
         float alpha = -INFINITY;
         float beta = INFINITY;
-        for(int i = 0; i < root->getChildren().size(); ++i) {
+        for(int i = 0; i < int(root->getChildren().size()); ++i) {
             float eval = alphaBeta(root->getChildren()[i], depth - 1, alpha, beta, false);
             if(eval > maxEval) {
                 best_move = i;
@@ -109,7 +109,7 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
         int best_move = 0;
         float alpha = -INFINITY;
         float beta = INFINITY;
-        for(int i = 0; i < root->getChildren().size(); ++i) {
+        for(int i = 0; i < int(root->getChildren().size()); ++i) {
             float eval = alphaBeta(root->getChildren()[i], depth - 1, alpha, beta, true);
             if(eval < minEval){
                 best_move = i;

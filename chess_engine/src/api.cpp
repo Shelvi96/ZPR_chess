@@ -18,9 +18,6 @@ std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, i
                 ++legalMoves;
                 if(move.isItCastling()) {
                     temp = m.MakeCastlingMove(b, move);
-//                    return temp.getFenString();
-                } else {
-//                    return temp.getFenString();
                 }
             }
             GameTree tree(temp);

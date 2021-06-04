@@ -273,52 +273,70 @@ float Board::getScore() const {
     return score_;
 }
 
+
 float Board::eval() {
-    for(auto &piece : board_) {
-        switch (piece.getPieceType()) {
+    for(int i = 0; i < int(board_.size()); ++i) {
+        switch (board_[i].getPieceType()) {
             case PieceType::EMPTY:
                 break;
             case PieceType::KING:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += KING_VALUE;
-                else
+                    score_ += KING_TABLE[i];
+                } else {
                     score_ -= KING_VALUE;
+                    score_ -= KING_TABLE[63 - i];
+                }
                 break;
             case PieceType::QUEEN:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += QUEEN_VALUE;
-                else
+                    score_ += QUEEN_TABLE[i];
+                } else {
                     score_ -= QUEEN_VALUE;
+                    score_ -= QUEEN_TABLE[63 - i];
+                }
                 break;
             case PieceType::ROOK:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += ROOK_VALUE;
-                else
+                    score_ += ROOK_TABLE[i];
+                } else {
                     score_ -= ROOK_VALUE;
+                    score_ -= ROOK_TABLE[63 - i];
+                }
                 break;
             case PieceType::BISHOP:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += BISHOP_VALUE;
-                else
+                    score_ += BISHOP_TABLE[i];
+                } else {
                     score_ -= BISHOP_VALUE;
+                    score_ -= BISHOP_TABLE[63 - i];
+                }
                 break;
             case PieceType::KNIGHT:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += KNIGHT_VALUE;
-                else
+                    score_ += KNIGHT_TABLE[i];
+                } else {
                     score_ -= KNIGHT_VALUE;
+                    score_ -= KNIGHT_TABLE[63 - i];
+                }
                 break;
             case PieceType::PAWN:
-                if(piece.getColor() == Color::WHITE)
+                if(board_[i].getColor() == Color::WHITE) {
                     score_ += PAWN_VALUE;
-                else
+                    score_ += PAWN_TABLE[i];
+                } else {
                     score_ -= PAWN_VALUE;
+                    score_ -= PAWN_TABLE[63 - i];
+                }
                 break;
             default:
                 std::cout << "Invalid piece";
         }
     }
-
     return score_;
 }
 
