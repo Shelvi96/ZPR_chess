@@ -53,7 +53,6 @@ private:
     void promotion(int curSquare, int newSquare, Color color);
 
     bool isChecking(Board& board);
-    bool isMoveLegal(Board board);
 
 public:
     /** @brief Default constructor.
@@ -93,6 +92,13 @@ public:
      * @return Board after making the move.
      */
     Board MakeCastlingMove(Board& board, Move move);
+
+    /** @brief Returns legality of the move.
+     * Returns legality of the move.
+     * @param[in] board - board for which the move is being validated
+     * @return Board after makin.
+     */
+    bool isMoveLegal(Board board);
 
     /** @brief Returns all legal boards.
      * Returns all boards that are created
