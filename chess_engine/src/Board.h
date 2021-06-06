@@ -159,7 +159,7 @@ public:
      *  @param[in] fen  - string containing FEN representation of the board
      *  @param[in] prevMove - string containing previous move
      */
-    explicit Board(const std::string& fen, std::string prevMove = "00,00");
+    Board(const std::string& fen, std::string prevMove = "00,00");
 
     /** @brief Default destructor.
      *  Default destructor.
@@ -270,11 +270,9 @@ public:
      */
     float getScore() const;
 
-    /** @brief Tworzy nowy element listy.
-     * Tworzy nowy element listy i inicjalizuje go wartością x.
-     * @param[in] x -	wskaźnik na napis, którym ma zostać zainicjalizowany
-     *					nowy element listy.
-     * @return Wskaźnik na utworzony element listy.
+    /** @brief Returns board evaluation.
+     * Returns board evaluation.
+     * @return Board evaluation.
      */
     float eval();
 };

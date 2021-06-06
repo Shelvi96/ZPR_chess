@@ -13,6 +13,12 @@ then
 fi
 cmake .
 make
+if doxygen --version &>/dev/null && dot -V &>/dev/null; then
+  make doc
+  echo "Documentation created."
+else
+  echo "Missing doxygen and/or graphviz. Cannot make doc."
+fi
 cd ..
 
 if [ ! -d "./chess_webapp/dependencies/flask" ];

@@ -184,6 +184,10 @@ fabric.properties
 # Local History for Visual Studio Code
 .history/
 
-
+# dependencies
 chess_engine/dependencies/pybind11
 chess_webapp/dependencies/flask
+
+# unit testing
+chess_engine/test/Testing
+chess_engine/test/Testing/*

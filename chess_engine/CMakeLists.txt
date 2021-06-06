@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -shared -std=c++11 -Wall -Wextra -fPIC")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../chess_webapp/lib")
 
 include_directories(src)
+add_subdirectory(test)
 add_subdirectory(dependencies/pybind11)
 pybind11_add_module(chessengine
     src/Piece.h
@@ -25,9 +26,8 @@ pybind11_add_module(chessengine
 
 target_link_libraries(chessengine PUBLIC)
 
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-  message("Doxygen found. Documentation available")
+find_package(Doxygen QUIET)
+if (Doxygen_FOUND)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
   add_custom_target(doc
     ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
@@ -36,4 +36,4 @@ if (DOXYGEN_FOUND)
   )
 else ()
   message("Doxygen not found. Please install doxygen to see the documentation")
-endif (DOXYGEN_FOUND)
+endif (Doxygen_FOUND)
