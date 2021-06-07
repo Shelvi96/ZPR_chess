@@ -20,4 +20,10 @@
  */
 std::string getNextFen(std::string fenString, int i_old, int j_old, int i_new, int j_new);
 
+/** @brief Returns game over status.
+ * Returns game over status.
+ * @param[in] fenString -	a FEN string representing current game state
+ */
+std::string isGameOver(std::string newFen);
+
 #endif // API_H

@@ -5,6 +5,7 @@ class Field {
     constructor(x, y, color) {
         this.color = color;
         this.piece = null;
+        this.game_over = false;
         this.dom_element = document.getElementById('box_' + x + '_' + y);
         this.set_color();
     }
@@ -97,18 +98,24 @@ export class Board {
     }
 
     check_move(i_old, j_old, i_new, j_new) {
+        if (this.game_over)
+            return;
+
         const board_config_parsed = this.board_config.replace(/\//g, ":");
         const board = this;
+        document.getElementById('fen').innerHTML = "Waiting for the opponent's response...";
         fetch(`/check/${board_config_parsed}/old/${7-i_old}.${7-j_old}/new/${7-i_new}.${7-j_new}`)
             .then(function (response) {
                 return response.text();
             }).then(function (newFEN) {
-                console.log("FEN: ", newFEN);
                 if (newFEN !== "") {
                     document.getElementById('fen').innerHTML = newFEN;
                     board.board_config = newFEN;
                     board.update_board();
+                    board.check_game_over();
                 }
+                else
+                    document.getElementById('fen').innerHTML = "Invalid move. Please try again.";
             });
     }
     update_board() {
@@ -122,6 +129,19 @@ export class Board {
                 this.fields[file][rank].set_piece(null);
             }
         }
+    }
+    check_game_over() {
+        const board_config_parsed = this.board_config.replace(/\//g, ":");
+        const board = this;
+        fetch(`/gameover/${board_config_parsed}`)
+            .then(function (response) {
+                return response.text();
+            }).then(function (gameStatus) {
+                if (gameStatus === "GAME_OVER") {
+                    board.game_over = true;
+                    document.getElementById('fen').innerHTML = "GAME OVER!";
+                }
+            })
     }
 }
 

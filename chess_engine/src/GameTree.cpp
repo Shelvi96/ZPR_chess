@@ -114,7 +114,6 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
                 maxEval = eval;
             }
             alpha = std::max(maxEval, beta);
-            std::cout << alpha << " " << beta << " " << eval << " " << best_move << '\n';
             if(alpha <= beta)
                 break;
         }
@@ -132,7 +131,6 @@ std::string GameTree::getBestMove(int depth, bool maximizingPlayer) {
 
             }
             beta = std::min(minEval, beta);
-            std::cout << alpha << " " << beta << " " << eval << " " << best_move << '\n';
             if(beta <= alpha)
                 break;
         }

@@ -18,6 +18,13 @@ def check_fen(fen_string, i_old, j_old, i_new, j_new):
     return ret
 
 
+@app.route("/gameover/<fen_string>", methods=['GET'])
+def is_game_over(fen_string):
+    fen_string = fen_string.replace(':', '/')
+    ret = chessengine.isGameOver(fen_string)
+    return ret
+
+
 @app.route("/no_access")
 def no_access():
     return render_template('no_access.html', title='No access')
