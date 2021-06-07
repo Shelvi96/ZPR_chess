@@ -263,7 +263,6 @@ float Board::getScore() const {
     return score_;
 }
 
-
 float Board::eval() {
     for(int i = 0; i < int(board_.size()); ++i) {
         switch (board_[i].getPieceType()) {

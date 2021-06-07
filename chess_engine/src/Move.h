@@ -42,7 +42,8 @@ public:
      *  @param[in] castling         -   is it castling
      *  @param[in] isEnPassant      -   is it en passant
      */
-    Move(int currentSquare, int targetSquare, const Piece& newPiece = Piece(), int enPassantSquare = -1, bool castling = false, bool isEnPassant = false);
+    Move(int currentSquare, int targetSquare, const Piece& newPiece = Piece(), int enPassantSquare = -1,
+         bool castling = false, bool isEnPassant = false);
 
     /** @brief Default destructor.
      *  Default destructor.

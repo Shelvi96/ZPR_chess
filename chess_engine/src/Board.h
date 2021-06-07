@@ -235,7 +235,7 @@ public:
     void takeAwayCastlingBlackQ();
 
     /** @brief Returns en passant square position.
-     * Returns en passant square position.
+     * Returns en passant square position. Returns -1 if en passant is not possible.
      * @return En passant square position.
      */
     int getEnPassantSquare() const;
