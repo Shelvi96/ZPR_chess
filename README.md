@@ -6,7 +6,7 @@ Once you have it downloaded, simply fire up run.sh script. Any other dependencie
 To run tests, Boost.Test is required. You can run the tests by running the run_test.sh script.  
   
 To generate the documentation, you need to have doxygen and graphviz installed.    
-Run 'make doc' to generate the documentation.  
+Documentation is generated with run.sh script and available from main view of the application.
   
 Good luck in your chess games!  
 Developers
